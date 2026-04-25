@@ -1,0 +1,326 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  @keyframes logoGlow {
+    0%,100% { box-shadow: 0 4px 20px rgba(160,80,255,0.2), 0 1px 4px rgba(0,0,0,0.08); }
+    50%      { box-shadow: 0 8px 36px rgba(160,80,255,0.38), 0 1px 4px rgba(0,0,0,0.08); }
+  }
+  @keyframes badgePulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(160,80,255,0.4); }
+    60%     { box-shadow: 0 0 0 6px rgba(160,80,255,0); }
+  }
+  @keyframes iconBounce {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.12) rotate(-4deg); }
+  }
+
+  .page {
+    background: #f5f3ff;
+    padding: 32px 18px 48px;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(70px);
+    opacity: 0.35;
+  }
+  .blob-1 { width: 320px; height: 320px; background: #c084fc; top: -80px; right: -60px; }
+  .blob-2 { width: 280px; height: 280px; background: #818cf8; bottom: -60px; left: -60px; }
+  .blob-3 { width: 200px; height: 200px; background: #f9a8d4; top: 40%; left: 60%; }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .header-card {
+    background: #ffffff;
+    border-radius: 22px;
+    border: 1px solid rgba(160,80,255,0.15);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 16px rgba(120,60,220,0.08), 0 1px 3px rgba(0,0,0,0.05);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .header-logo {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    animation: logoGlow 3.5s ease-in-out infinite;
+    background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .header-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
+  .logo-fallback {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px; font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 19px; font-weight: 800;
+    color: #1e1b4b; letter-spacing: -0.02em;
+  }
+  .tagline { font-size: 12px; color: #7c6fa0; margin-top: 1px; }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 22px;
+    animation: fadeUp 0.5s 0.08s ease both;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(90deg, #a855f7, #6366f1);
+    color: #fff;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    animation: badgePulse 2.5s ease-in-out infinite;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #1e1b4b;
+  }
+  .section-title .accent {
+    background: linear-gradient(90deg, #a855f7, #6366f1, #a855f7);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+  }
+  .title-line {
+    width: 40px; height: 3px;
+    background: linear-gradient(90deg, #a855f7, #6366f1);
+    border-radius: 100px;
+    margin: 10px auto 0;
+  }
+
+  .section-label {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9882c0;
+    margin-bottom: 9px;
+    padding-left: 2px;
+  }
+
+  .group { margin-bottom: 20px; }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(160,80,255,0.12);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(120,60,220,0.05);
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -120%; width: 70%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.75), transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+  }
+  .btn:hover::before { left: 150%; }
+
+  .btn::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(168,85,247,0.06), rgba(99,102,241,0.04));
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 16px;
+  }
+
+  .btn:hover { transform: translateY(-2px); border-color: rgba(168,85,247,0.28); box-shadow: 0 6px 24px rgba(120,60,220,0.12); }
+  .btn:hover::after { opacity: 1; }
+  .btn:hover .icon-wrap { animation: iconBounce 0.5s ease; }
+  .btn:active { transform: scale(0.98); }
+
+  .icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .ic-purple  { background: linear-gradient(135deg, #f3e8ff, #ede9fe); }
+  .ic-indigo  { background: linear-gradient(135deg, #eef2ff, #e0e7ff); }
+  .ic-pink    { background: linear-gradient(135deg, #fdf2f8, #fce7f3); }
+  .ic-emerald { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+
+  .btn-content { flex: 1; }
+  .btn-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: #1e1b4b; letter-spacing: -0.01em;
+  }
+  .btn-sub { font-size: 12px; color: #7c6fa0; margin-top: 2px; }
+
+  .btn-arrow {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 15px; color: #a855f7;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn:hover .btn-arrow {
+    background: linear-gradient(135deg, #a855f7, #6366f1);
+    color: #fff;
+    transform: translateX(2px);
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168,85,247,0.2), transparent);
+    margin: 4px 0 18px;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 12px;
+    color: #9882c0;
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+    animation: fadeUp 0.5s 0.6s ease both;
+  }
+  .footer .rl {
+    background: linear-gradient(90deg, #a855f7, #6366f1);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+    font-weight: 600;
+  }
+
+  .group:nth-child(1) { animation: fadeUp 0.5s 0.14s ease both; }
+  .group:nth-child(2) { animation: fadeUp 0.5s 0.22s ease both; }
+  .group:nth-child(3) { animation: fadeUp 0.5s 0.30s ease both; }
+</style>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="page">
+  <div class="wrap">
+
+    <div class="header-card">
+      <div class="header-logo">
+        <img src="RizzLive.png" alt="Rizz Live" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\'logo-fallback\'>R</span>')">
+      </div>
+      <div>
+        <div class="brand">RIZZ LIVE</div>
+        <div class="tagline">Live Streaming Platform</div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="badge">📋 Official Documents</div>
+      <div class="section-title">Rizz Live <span class="accent">Policy</span></div>
+      <div class="title-line"></div>
+    </div>
+
+    <!-- POLICIES -->
+    <div class="group">
+      <div class="section-label">Policies</div>
+
+      <a class="btn" href="rizz_live_host_policy.html">
+        <div class="icon-wrap ic-purple">🎙️</div>
+        <div class="btn-content">
+          <div class="btn-title">HOST POLICY</div>
+          <div class="btn-sub">Rules & guidelines for hosts</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="rizz_live_agency_policy_v2.html">
+        <div class="icon-wrap ic-indigo">🏢</div>
+        <div class="btn-content">
+          <div class="btn-title">AGENCY POLICY</div>
+          <div class="btn-sub">Agency terms & conditions</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <div class="group">
+      <div class="section-label">Contact</div>
+
+      <a class="btn" href="https://wa.link/pufgzw" target="_blank">
+        <div class="icon-wrap ic-pink">📞</div>
+        <div class="btn-content">
+          <div class="btn-title">CONTACT US</div>
+          <div class="btn-sub">Get in touch with Country Manager</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+
+      <a class="btn" href="https://whatsapp.com/channel/0029Vb7eyLO4dTnB6cywpD1F" target="_blank">
+        <div class="icon-wrap ic-emerald">📢</div>
+        <div class="btn-content">
+          <div class="btn-title">JOIN OFFICIAL CHANNEL</div>
+          <div class="btn-sub">For daily updates on WhatsApp</div>
+        </div>
+        <div class="btn-arrow">›</div>
+      </a>
+    </div>
+
+    <div class="footer"><span class="rl">Rizz Live</span> &nbsp;·&nbsp; All Rights Reserved</div>
+
+  </div>
+</div>
