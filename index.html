@@ -12,7 +12,6 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html { font-size: 16px; -webkit-text-size-adjust: 100%; }
 
-    /* ── ANIMATIONS ──────────────────────────────── */
     @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
     @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
     @keyframes logoGlow {
@@ -25,7 +24,6 @@
     }
     @keyframes accOpen { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ── BASE ──────────────────────────────────── */
     body {
       background: #f5f3ff;
       font-family: 'DM Sans', sans-serif;
@@ -34,53 +32,71 @@
       min-height: 100vh;
     }
 
-    /* ── BLOBS ─────────────────────────────────── */
-    .blob {
-      position: fixed; border-radius: 50%; pointer-events: none;
-      z-index: 0; filter: blur(80px); opacity: 0.28;
-    }
+    .blob { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(80px); opacity: 0.28; }
     .blob-1 { width: 280px; height: 280px; background: #c084fc; top: -60px; right: -60px; }
     .blob-2 { width: 240px; height: 240px; background: #818cf8; bottom: -50px; left: -50px; }
     .blob-3 { width: 160px; height: 160px; background: #f9a8d4; top: 40%; left: 60%; }
 
-    /* ── PAGES ─────────────────────────────────── */
-    .page {
-      display: none;
-      position: relative; z-index: 1;
-      padding: 24px 16px 56px;
-      max-width: 480px;
-      margin: 0 auto;
-      min-height: 100vh;
-    }
+    .page { display: none; position: relative; z-index: 1; padding: 24px 16px 56px; max-width: 480px; margin: 0 auto; min-height: 100vh; }
     .page.active { display: block; animation: fadeUp 0.4s ease both; }
 
-    /* ── HEADER CARD ───────────────────────────── */
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-bar {
+      display: flex; justify-content: center; margin-bottom: 14px;
+      position: relative; z-index: 99;
+    }
+    .lang-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #fff; border: 1px solid rgba(168,85,247,0.25);
+      border-radius: 100px; padding: 8px 16px;
+      font-size: 13px; font-weight: 600; color: #7c3aed;
+      cursor: pointer; box-shadow: 0 2px 10px rgba(120,60,220,0.08);
+      touch-action: manipulation; user-select: none;
+      transition: box-shadow 0.2s;
+    }
+    .lang-btn:active { transform: scale(0.97); }
+    .lang-btn .flag { font-size: 15px; }
+    .lang-btn .chevron { font-size: 11px; color: #a855f7; transition: transform 0.25s; }
+    .lang-btn.open .chevron { transform: rotate(180deg); }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute; top: calc(100% + 6px); right: 0;
+      background: #fff; border: 1px solid rgba(168,85,247,0.15);
+      border-radius: 16px; overflow: hidden; min-width: 210px;
+      box-shadow: 0 8px 32px rgba(120,60,220,0.14), 0 2px 8px rgba(0,0,0,0.06);
+      z-index: 999;
+    }
+    .lang-dropdown.open { display: block; animation: fadeUp 0.2s ease both; }
+    .lang-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 18px; font-size: 13px; font-weight: 600; color: #374151;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .lang-option:hover { background: rgba(168,85,247,0.06); color: #7c3aed; }
+    .lang-option.active { background: rgba(168,85,247,0.08); color: #7c3aed; }
+    .lang-option .opt-flag { font-size: 18px; }
+    .lang-option .opt-label { flex: 1; }
+    .lang-option .opt-check { color: #a855f7; font-size: 14px; opacity: 0; }
+    .lang-option.active .opt-check { opacity: 1; }
+
+    /* ── HEADER CARD ── */
     .header-card {
-      background: #fff;
-      border-radius: 20px;
-      border: 1px solid rgba(160,80,255,0.15);
-      padding: 14px 18px;
-      display: flex; align-items: center; gap: 14px;
-      margin-bottom: 18px;
+      background: #fff; border-radius: 20px; border: 1px solid rgba(160,80,255,0.15);
+      padding: 14px 18px; display: flex; align-items: center; gap: 14px; margin-bottom: 18px;
       box-shadow: 0 2px 16px rgba(120,60,220,0.08), 0 1px 3px rgba(0,0,0,0.04);
     }
     .header-logo {
-      width: 52px; height: 52px;
-      border-radius: 14px; overflow: hidden; flex-shrink: 0;
+      width: 52px; height: 52px; border-radius: 14px; overflow: hidden; flex-shrink: 0;
       animation: logoGlow 3.5s ease-in-out infinite;
       background: linear-gradient(135deg, #f3e8ff, #ede9fe);
       display: flex; align-items: center; justify-content: center;
     }
     .header-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
-    .logo-fallback {
-      font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+    .logo-fallback { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; background: linear-gradient(135deg, #a855f7, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .brand { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #1e1b4b; letter-spacing: -0.02em; }
     .tagline { font-size: 12px; color: #7c6fa0; margin-top: 1px; }
 
-    /* ── BACK BTN ──────────────────────────────── */
     .back-btn {
       display: inline-flex; align-items: center; gap: 7px;
       background: #fff; border: 1px solid rgba(168,85,247,0.2);
@@ -88,12 +104,10 @@
       font-size: 13px; font-weight: 600; color: #7c3aed;
       cursor: pointer; text-decoration: none;
       box-shadow: 0 2px 10px rgba(120,60,220,0.08);
-      transition: all 0.2s; margin-bottom: 20px;
-      touch-action: manipulation;
+      transition: all 0.2s; margin-bottom: 20px; touch-action: manipulation;
     }
     .back-btn:active { transform: scale(0.96); }
 
-    /* ── SECTION HEAD ──────────────────────────── */
     .section-head { text-align: center; margin-bottom: 22px; }
     .badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -103,41 +117,25 @@
       text-transform: uppercase; animation: badgePulse 2.5s ease-in-out infinite;
     }
     .page-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: #1e1b4b; letter-spacing: -0.03em; }
-    .page-title .accent {
-      background: linear-gradient(90deg, #a855f7, #6366f1, #a855f7); background-size: 200% auto;
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
+    .page-title .accent { background: linear-gradient(90deg, #a855f7, #6366f1, #a855f7); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; }
     .title-line { width: 40px; height: 3px; background: linear-gradient(90deg, #a855f7, #6366f1); border-radius: 100px; margin: 10px auto 0; }
 
-    /* ── HOME BUTTONS ──────────────────────────── */
-    .section-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
-      text-transform: uppercase; color: #9882c0; margin-bottom: 10px; padding-left: 2px;
-    }
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #9882c0; margin-bottom: 10px; padding-left: 2px; }
     .group { margin-bottom: 22px; }
-    .group:nth-child(1) { animation: fadeUp 0.4s 0.12s ease both; }
-    .group:nth-child(2) { animation: fadeUp 0.4s 0.2s ease both; }
-    .group:nth-child(3) { animation: fadeUp 0.4s 0.28s ease both; }
+    .group:nth-child(1){animation:fadeUp 0.4s 0.12s ease both}
+    .group:nth-child(2){animation:fadeUp 0.4s 0.2s ease both}
+    .group:nth-child(3){animation:fadeUp 0.4s 0.28s ease both}
 
     .nav-btn {
-      display: flex; align-items: center; gap: 14px;
-      width: 100%; background: #fff;
-      border: 1px solid rgba(160,80,255,0.12);
-      border-radius: 18px; padding: 15px 16px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 14px; width: 100%; background: #fff;
+      border: 1px solid rgba(160,80,255,0.12); border-radius: 18px; padding: 15px 16px; margin-bottom: 10px;
       text-decoration: none; color: inherit; cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      box-shadow: 0 1px 6px rgba(120,60,220,0.05);
-      touch-action: manipulation; -webkit-appearance: none;
-      background-clip: padding-box;
+      box-shadow: 0 1px 6px rgba(120,60,220,0.05); touch-action: manipulation; -webkit-appearance: none; background-clip: padding-box;
     }
     .nav-btn:active { transform: scale(0.97); box-shadow: 0 2px 12px rgba(120,60,220,0.14); }
 
-    .icon-wrap {
-      width: 46px; height: 46px; border-radius: 13px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 22px;
-    }
+    .icon-wrap { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 22px; }
     .ic-purple  { background: linear-gradient(135deg, #f3e8ff, #ede9fe); }
     .ic-indigo  { background: linear-gradient(135deg, #eef2ff, #e0e7ff); }
     .ic-pink    { background: linear-gradient(135deg, #fdf2f8, #fce7f3); }
@@ -146,51 +144,23 @@
     .btn-content { flex: 1; }
     .btn-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800; color: #1e1b4b; letter-spacing: -0.01em; }
     .btn-sub { font-size: 12px; color: #7c6fa0; margin-top: 3px; }
+    .btn-arrow { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #f3e8ff, #ede9fe); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; color: #a855f7; font-weight: 700; }
 
-    .btn-arrow {
-      width: 30px; height: 30px; border-radius: 9px;
-      background: linear-gradient(135deg, #f3e8ff, #ede9fe);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 16px; color: #a855f7; font-weight: 700;
-    }
-
-    /* ── DIVIDER ───────────────────────────────── */
     .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(168,85,247,0.2), transparent); margin: 14px 0 18px; }
 
-    /* ── FOOTER ────────────────────────────────── */
     .footer { text-align: center; font-size: 12px; color: #9882c0; margin-top: 14px; letter-spacing: 0.04em; }
-    .footer .rl {
-      background: linear-gradient(90deg, #a855f7, #6366f1); background-size: 200% auto;
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite; font-weight: 700;
-    }
+    .footer .rl { background: linear-gradient(90deg, #a855f7, #6366f1); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s linear infinite; font-weight: 700; }
 
-    /* ── ACCORDION ─────────────────────────────── */
-    .acc {
-      background: #fff; border: 1px solid rgba(160,80,255,0.13);
-      border-radius: 18px; margin-bottom: 12px; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(120,60,220,0.06);
-    }
+    .acc { background: #fff; border: 1px solid rgba(160,80,255,0.13); border-radius: 18px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(120,60,220,0.06); }
     .acc:nth-child(1){animation:fadeUp 0.4s 0.14s ease both}
     .acc:nth-child(2){animation:fadeUp 0.4s 0.21s ease both}
     .acc:nth-child(3){animation:fadeUp 0.4s 0.28s ease both}
     .acc:nth-child(4){animation:fadeUp 0.4s 0.35s ease both}
     .acc:nth-child(5){animation:fadeUp 0.4s 0.42s ease both}
 
-    .acc-header {
-      display: flex; align-items: center; gap: 12px;
-      padding: 16px 18px; cursor: pointer;
-      transition: background 0.2s; user-select: none;
-      touch-action: manipulation;
-    }
+    .acc-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; cursor: pointer; transition: background 0.2s; user-select: none; touch-action: manipulation; }
     .acc-header:active { background: rgba(168,85,247,0.04); }
-
-    .acc-num {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800;
-      color: #fff; flex-shrink: 0;
-    }
+    .acc-num { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
     .n-purple  { background: linear-gradient(135deg, #a855f7, #6366f1); }
     .n-indigo  { background: linear-gradient(135deg, #6366f1, #4f46e5); }
     .n-emerald { background: linear-gradient(135deg, #10b981, #059669); }
@@ -203,15 +173,8 @@
     .acc-body { display: none; padding: 0 16px 16px; animation: accOpen 0.3s ease; }
     .acc.open .acc-body { display: block; }
 
-    /* ── SUB HEADINGS ──────────────────────────── */
-    .sub-head {
-      display: flex; align-items: center; gap: 8px;
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800;
-      color: #7c3aed; margin: 14px 0 10px;
-      border-left: 3px solid #a855f7; padding-left: 10px;
-    }
+    .sub-head { display: flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #7c3aed; margin: 14px 0 10px; border-left: 3px solid #a855f7; padding-left: 10px; }
 
-    /* ── TABLE ─────────────────────────────────── */
     .tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 10px; border-radius: 12px; }
     .tbl { width: 100%; border-collapse: collapse; min-width: 260px; border-radius: 12px; overflow: hidden; }
     .tbl thead tr { background: linear-gradient(90deg, rgba(168,85,247,0.15), rgba(99,102,241,0.12)); }
@@ -220,44 +183,29 @@
     .tbl tr:last-child td { border-bottom: none; }
     .tbl tr:nth-child(even) td { background: rgba(168,85,247,0.03); }
 
-    /* ── VALUE COLORS ──────────────────────────── */
-    .val-gold   { color: #d97706; font-weight: 700; }
-    .val-green  { color: #059669; font-weight: 700; }
-    .val-pink   { color: #db2777; font-weight: 700; }
+    .val-gold { color: #d97706; font-weight: 700; }
+    .val-green { color: #059669; font-weight: 700; }
+    .val-pink { color: #db2777; font-weight: 700; }
     .val-purple { color: #7c3aed; font-weight: 700; }
-    .val-red    { color: #dc2626; font-weight: 700; }
-    .hl-gold    { color: #d97706; font-weight: 700; }
-    .hl-green   { color: #059669; font-weight: 700; }
-    .hl-purple  { color: #7c3aed; font-weight: 700; }
-    .hl-pink    { color: #db2777; font-weight: 700; }
-    .hl-red     { color: #dc2626; font-weight: 700; }
+    .val-red { color: #dc2626; font-weight: 700; }
+    .hl-gold { color: #d97706; font-weight: 700; }
+    .hl-green { color: #059669; font-weight: 700; }
+    .hl-purple { color: #7c3aed; font-weight: 700; }
+    .hl-pink { color: #db2777; font-weight: 700; }
+    .hl-red { color: #dc2626; font-weight: 700; }
 
-    /* ── INFO BOXES ────────────────────────────── */
-    .example-box, .info-box {
-      background: linear-gradient(135deg, rgba(168,85,247,0.07), rgba(99,102,241,0.05));
-      border: 1px solid rgba(168,85,247,0.18); border-radius: 12px; padding: 12px 14px; margin: 10px 0;
-    }
-    .example-label, .info-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-      color: #a855f7; text-transform: uppercase; margin-bottom: 6px;
-    }
+    .example-box, .info-box { background: linear-gradient(135deg, rgba(168,85,247,0.07), rgba(99,102,241,0.05)); border: 1px solid rgba(168,85,247,0.18); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
+    .example-label, .info-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #a855f7; text-transform: uppercase; margin-bottom: 6px; }
     .example-box p, .info-box p { font-size: 13px; color: #374151; line-height: 1.65; }
 
-    .strict-box {
-      background: linear-gradient(135deg, rgba(239,68,68,0.07), rgba(220,38,38,0.04));
-      border: 1px solid rgba(239,68,68,0.22); border-radius: 12px; padding: 12px 14px; margin: 10px 0;
-    }
+    .strict-box { background: linear-gradient(135deg, rgba(239,68,68,0.07), rgba(220,38,38,0.04)); border: 1px solid rgba(239,68,68,0.22); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
     .strict-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #dc2626; text-transform: uppercase; margin-bottom: 6px; }
     .strict-box p { font-size: 13px; color: #374151; line-height: 1.65; }
 
-    .amber-box {
-      background: linear-gradient(135deg, rgba(245,158,11,0.07), rgba(217,119,6,0.04));
-      border: 1px solid rgba(245,158,11,0.22); border-radius: 12px; padding: 12px 14px; margin: 10px 0;
-    }
+    .amber-box { background: linear-gradient(135deg, rgba(245,158,11,0.07), rgba(217,119,6,0.04)); border: 1px solid rgba(245,158,11,0.22); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
     .amber-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #d97706; text-transform: uppercase; margin-bottom: 6px; }
     .amber-box p { font-size: 13px; color: #374151; line-height: 1.65; }
 
-    /* ── BULLET LIST ───────────────────────────── */
     .blist { list-style: none; margin: 8px 0; }
     .blist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: #374151; line-height: 1.6; padding: 4px 0; }
     .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
@@ -268,18 +216,13 @@
     .dot-red    { background: #ef4444; }
     .dot-blue   { background: #3b82f6; }
 
-    /* ── STAT ROW ──────────────────────────────── */
     .stat-row { display: flex; gap: 10px; margin: 10px 0; }
     .stat-chip { flex: 1; background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(99,102,241,0.06)); border: 1px solid rgba(168,85,247,0.14); border-radius: 10px; padding: 10px 12px; text-align: center; }
     .stat-chip .sv { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #7c3aed; }
     .stat-chip .sl { font-size: 11px; color: #9882c0; margin-top: 2px; }
 
-    /* ── TIME ROW ──────────────────────────────── */
     .time-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
-    .time-chip {
-      flex: 1; background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(99,102,241,0.07));
-      border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; padding: 10px 8px; text-align: center;
-    }
+    .time-chip { flex: 1; background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(99,102,241,0.07)); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; padding: 10px 8px; text-align: center; }
     .time-chip .tc-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9882c0; margin-bottom: 4px; }
     .time-chip .tc-val { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: #7c3aed; }
     .time-chip .tc-tz { font-size: 11px; color: #a855f7; margin-top: 2px; font-weight: 600; }
@@ -288,48 +231,62 @@
 </head>
 <body>
 
-<!-- BACKGROUND BLOBS (shared) -->
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>
 <div class="blob blob-3"></div>
 
-<!-- ═══════════════════════════════════════════════════
-     PAGE 1: HOME / INDEX
-════════════════════════════════════════════════════ -->
+<!-- ═══════════════ PAGE 1: HOME ═══════════════ -->
 <div class="page active" id="page-home">
+
   <div class="header-card">
     <div class="header-logo">
       <img src="RizzLive.png" alt="Rizz Live" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span class=\'logo-fallback\'>R</span>')">
     </div>
     <div>
       <div class="brand">RIZZ LIVE</div>
-      <div class="tagline">Live Streaming Platform</div>
+      <div class="tagline" data-i18n="tagline">Live Streaming Platform</div>
     </div>
   </div>
 
   <div class="section-head" style="animation:fadeUp 0.4s 0.06s ease both;">
-    <div class="badge">📋 Official Documents</div>
-    <div class="page-title">Rizz Live <span class="accent">Policy</span></div>
+    <div class="badge" data-i18n="badge_home">📋 Official Documents</div>
+    <div class="page-title">Rizz Live <span class="accent" data-i18n="policy_word">Policy</span></div>
     <div class="title-line"></div>
   </div>
 
-  <div class="group">
-    <div class="section-label">Policies</div>
+  <!-- LANGUAGE SWITCHER -->
+  <div class="lang-bar" style="justify-content:center; margin-bottom:22px;">
+    <div style="position:relative;">
+      <button class="lang-btn" id="langToggle" onclick="toggleLang()">
+        <span class="flag" id="currentFlag">🇬🇧</span>
+        <span id="currentLangLabel">English</span>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="lang-dropdown" id="langDropdown" style="left:50%;transform:translateX(-50%);right:auto;">
+        <div class="lang-option active" onclick="setLang('en')"><span class="opt-flag">🇬🇧</span><span class="opt-label">English</span><span class="opt-check">✓</span></div>
+        <div class="lang-option" onclick="setLang('es')"><span class="opt-flag">🇪🇸</span><span class="opt-label">Español</span><span class="opt-check">✓</span></div>
+        <div class="lang-option" onclick="setLang('pt')"><span class="opt-flag">🇧🇷</span><span class="opt-label">Português (BR)</span><span class="opt-check">✓</span></div>
+        <div class="lang-option" onclick="setLang('ru')"><span class="opt-flag">🇷🇺</span><span class="opt-label">Русский</span><span class="opt-check">✓</span></div>
+        <div class="lang-option" onclick="setLang('uk')"><span class="opt-flag">🇺🇦</span><span class="opt-label">Українська</span><span class="opt-check">✓</span></div>
+      </div>
+    </div>
+  </div>
 
+  <div class="group">
+    <div class="section-label" data-i18n="label_policies">Policies</div>
     <button class="nav-btn" onclick="showPage('page-host')">
       <div class="icon-wrap ic-purple">🎙️</div>
       <div class="btn-content">
-        <div class="btn-title">HOST POLICY</div>
-        <div class="btn-sub">Rules &amp; guidelines for hosts</div>
+        <div class="btn-title" data-i18n="host_policy_title">HOST POLICY</div>
+        <div class="btn-sub" data-i18n="host_policy_sub">Rules &amp; guidelines for hosts</div>
       </div>
       <div class="btn-arrow">›</div>
     </button>
-
     <button class="nav-btn" onclick="showPage('page-agency')">
       <div class="icon-wrap ic-indigo">🏢</div>
       <div class="btn-content">
-        <div class="btn-title">AGENCY POLICY</div>
-        <div class="btn-sub">Agency terms &amp; conditions</div>
+        <div class="btn-title" data-i18n="agency_policy_title">AGENCY POLICY</div>
+        <div class="btn-sub" data-i18n="agency_policy_sub">Agency terms &amp; conditions</div>
       </div>
       <div class="btn-arrow">›</div>
     </button>
@@ -338,34 +295,30 @@
   <div class="divider"></div>
 
   <div class="group">
-    <div class="section-label">Contact</div>
-
+    <div class="section-label" data-i18n="label_contact">Contact</div>
     <a class="nav-btn" href="https://wa.link/pufgzw" target="_blank" rel="noopener">
       <div class="icon-wrap ic-pink">📞</div>
       <div class="btn-content">
-        <div class="btn-title">CONTACT US</div>
-        <div class="btn-sub">Get in touch with Country Manager</div>
+        <div class="btn-title" data-i18n="contact_title">CONTACT US</div>
+        <div class="btn-sub" data-i18n="contact_sub">Get in touch with Country Manager</div>
       </div>
       <div class="btn-arrow">›</div>
     </a>
-
     <a class="nav-btn" href="https://whatsapp.com/channel/0029Vb7eyLO4dTnB6cywpD1F" target="_blank" rel="noopener">
       <div class="icon-wrap ic-emerald">📢</div>
       <div class="btn-content">
-        <div class="btn-title">JOIN OFFICIAL CHANNEL</div>
-        <div class="btn-sub">Daily updates on WhatsApp</div>
+        <div class="btn-title" data-i18n="channel_title">JOIN OFFICIAL CHANNEL</div>
+        <div class="btn-sub" data-i18n="channel_sub">Daily updates on WhatsApp</div>
       </div>
       <div class="btn-arrow">›</div>
     </a>
   </div>
 
-  <div class="footer"><span class="rl">Rizz Live</span> &nbsp;·&nbsp; All Rights Reserved</div>
+  <div class="footer"><span class="rl">Rizz Live</span> &nbsp;·&nbsp; <span data-i18n="all_rights">All Rights Reserved</span></div>
 </div>
 
 
-<!-- ═══════════════════════════════════════════════════
-     PAGE 2: HOST POLICY
-════════════════════════════════════════════════════ -->
+<!-- ═══════════════ PAGE 2: HOST POLICY ═══════════════ -->
 <div class="page" id="page-host">
   <div class="header-card">
     <div class="header-logo">
@@ -373,208 +326,194 @@
     </div>
     <div>
       <div class="brand">RIZZ LIVE</div>
-      <div class="tagline">Live Streaming Platform</div>
+      <div class="tagline" data-i18n="tagline">Live Streaming Platform</div>
     </div>
   </div>
 
-  <button class="back-btn" onclick="showPage('page-home')">‹ Back</button>
+  <button class="back-btn" onclick="showPage('page-home')">‹ <span data-i18n="back">Back</span></button>
 
   <div class="section-head">
-    <div class="badge">🎙 Host Guidelines</div>
-    <div class="page-title">Host <span class="accent">Policy</span></div>
+    <div class="badge" data-i18n="badge_host">🎙 Host Guidelines</div>
+    <div class="page-title"><span data-i18n="host_word">Host</span> <span class="accent" data-i18n="policy_word">Policy</span></div>
     <div class="title-line"></div>
   </div>
 
-  <!-- SECTION 1: Salary Structure -->
+  <!-- S1 -->
   <div class="acc open" id="h-acc1">
     <div class="acc-header" onclick="toggle('h-acc1')">
       <div class="acc-num n-purple">1</div>
-      <div class="acc-title">Host Salary Structure</div>
+      <div class="acc-title" data-i18n="h1_title">Host Salary Structure</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
-      <div class="sub-head">1.1 Personal Gift Share</div>
+      <div class="sub-head" data-i18n="h1_1_head">1.1 Personal Gift Share</div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Basic Share</th></tr></thead>
-          <tbody><tr><td>Host Share &nbsp;<span class="val-green">100%</span></td></tr></tbody>
+          <thead><tr><th data-i18n="basic_share">Basic Share</th></tr></thead>
+          <tbody><tr><td><span data-i18n="host_share">Host Share</span> &nbsp;<span class="val-green">100%</span></td></tr></tbody>
         </table>
       </div>
       <div class="example-box">
-        <div class="example-label">🔥 Example</div>
-        <p>If a user sends <span class="hl-gold">10K Coins</span> during a live broadcast, the host will receive <span class="hl-gold">10K Rubies</span>.</p>
+        <div class="example-label" data-i18n="example_label">🔥 Example</div>
+        <p data-i18n="h1_1_example">If a user sends <span class="hl-gold">10K Coins</span> during a live broadcast, the host will receive <span class="hl-gold">10K Rubies</span>.</p>
       </div>
-
       <div class="divider"></div>
-
-      <div class="sub-head">1.2 Host Weekly Bonus</div>
+      <div class="sub-head" data-i18n="h1_2_head">1.2 Host Weekly Bonus</div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Valid Hours Target</th><th>Valid Days Target</th><th>Weekly Bonus</th></tr></thead>
-          <tbody>
-            <tr><td><span class="val-pink">10</span></td><td><span class="val-pink">4</span></td><td><span class="val-green">30%</span></td></tr>
-          </tbody>
+          <thead><tr><th data-i18n="valid_hours_target">Valid Hours Target</th><th data-i18n="valid_days_target">Valid Days Target</th><th data-i18n="weekly_bonus">Weekly Bonus</th></tr></thead>
+          <tbody><tr><td><span class="val-pink">10</span></td><td><span class="val-pink">4</span></td><td><span class="val-green">30%</span></td></tr></tbody>
         </table>
       </div>
       <div class="example-box">
-        <div class="example-label">🔥 Example</div>
-        <p>If a host earns <span class="hl-gold">100K Rubies</span> in one week <span class="hl-pink">(Sunday 12:00 PM to Sunday 12:00 PM – EST New York Time)</span>, they receive a <span class="hl-gold">30K Ruby bonus (30%)</span>, credited on <span class="hl-purple">Monday</span>.</p>
+        <div class="example-label" data-i18n="example_label">🔥 Example</div>
+        <p data-i18n="h1_2_example">If a host earns <span class="hl-gold">100K Rubies</span> in one week <span class="hl-pink">(Sunday 12:00 PM to Sunday 12:00 PM – EST New York Time)</span>, they receive a <span class="hl-gold">30K Ruby bonus (30%)</span>, credited on <span class="hl-purple">Monday</span>.</p>
         <br>
-        <p>To get this bonus, the host must:</p>
+        <p data-i18n="h1_2_to_get">To get this bonus, the host must:</p>
       </div>
       <ul class="blist">
-        <li><span class="dot dot-pink"></span><span>Complete at least <strong>4 active days</strong></span></li>
-        <li><span class="dot dot-pink"></span><span>Stream a total of <strong>10 hours</strong> in the week</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h1_2_req1">Complete at least <strong>4 active days</strong></span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h1_2_req2">Stream a total of <strong>10 hours</strong> in the week</span></li>
       </ul>
-
       <div class="divider"></div>
-
-      <div class="sub-head">1.3 Rules</div>
+      <div class="sub-head" data-i18n="h1_3_head">1.3 Rules</div>
       <ul class="blist">
-        <li><span class="dot dot-gold"></span><span><strong>Withdrawal Rate:</strong> <span class="hl-gold">20,000 Ruby = 1 USD</span></span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Day Change:</strong> Daily at <span class="hl-pink">12:00 PM (EST – New York Time)</span></span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Weekly Period:</strong> <span class="hl-pink">Sunday 12:00 PM to Sunday 12:00 PM (EST – New York Time)</span></span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Valid Day:</strong> Minimum <span class="hl-gold">120 minutes (2 hours)</span> Live</span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Valid Hour:</strong> 60+ minutes = <span class="hl-gold">1 valid hour</span></span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Minimum Live Time:</strong> Sessions below <strong>30 minutes</strong> not counted</span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Bonus Payment:</strong> Every <span class="hl-purple">Monday (in Rubies)</span></span></li>
-        <li><span class="dot dot-gold"></span><span><strong>Withdrawal:</strong> Once per day, Minimum = <span class="hl-green">$10 USD</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_withdrawal_rate"><strong>Withdrawal Rate:</strong> <span class="hl-gold">20,000 Ruby = 1 USD</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_day_change"><strong>Day Change:</strong> Daily at <span class="hl-pink">12:00 PM (EST – New York Time)</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_weekly_period"><strong>Weekly Period:</strong> <span class="hl-pink">Sunday 12:00 PM to Sunday 12:00 PM (EST – New York Time)</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_valid_day"><strong>Valid Day:</strong> Minimum <span class="hl-gold">120 minutes (2 hours)</span> Live</span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_valid_hour"><strong>Valid Hour:</strong> 60+ minutes = <span class="hl-gold">1 valid hour</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_min_live"><strong>Minimum Live Time:</strong> Sessions below <strong>30 minutes</strong> not counted</span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_bonus_pay"><strong>Bonus Payment:</strong> Every <span class="hl-purple">Monday (in Rubies)</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="rule_withdrawal"><strong>Withdrawal:</strong> Once per day, Minimum = <span class="hl-green">$10 USD</span></span></li>
       </ul>
-
       <div class="divider"></div>
-
-      <div class="sub-head" style="color:#6366f1;border-color:#6366f1;">Agency Change Rules</div>
-      <p style="font-size:13px;color:#374151;margin-bottom:8px;">A host can change agency if:</p>
+      <div class="sub-head" style="color:#6366f1;border-color:#6366f1;" data-i18n="agency_change_head">Agency Change Rules</div>
+      <p style="font-size:13px;color:#374151;margin-bottom:8px;" data-i18n="agency_change_intro">A host can change agency if:</p>
       <ul class="blist">
-        <li><span class="dot dot-purple"></span><span>No live for <strong>120 days</strong></span></li>
-        <li><span class="dot dot-purple"></span><span>Cannot contact agency for <strong>2 weeks</strong></span></li>
-        <li><span class="dot dot-purple"></span><span>Both host and agency agree</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ac_r1">No live for <strong>120 days</strong></span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ac_r2">Cannot contact agency for <strong>2 weeks</strong></span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ac_r3">Both host and agency agree</span></li>
       </ul>
       <div class="strict-box">
-        <div class="strict-label">⚠ Strict Rule</div>
-        <p>Any misuse or cheating during transfer → <span class="hl-red">Warning / Suspension / Ban</span></p>
+        <div class="strict-label" data-i18n="strict_rule">⚠ Strict Rule</div>
+        <p data-i18n="ac_strict">Any misuse or cheating during transfer → <span class="hl-red">Warning / Suspension / Ban</span></p>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 2: Game Commissions -->
+  <!-- S2 -->
   <div class="acc" id="h-acc2">
     <div class="acc-header" onclick="toggle('h-acc2')">
       <div class="acc-num n-indigo">2</div>
-      <div class="acc-title">Host Game Commissions</div>
+      <div class="acc-title" data-i18n="h2_title">Host Game Commissions</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Bet Amount (Coins)</th><th>Reward (Ruby)</th></tr></thead>
+          <thead><tr><th data-i18n="bet_amount">Bet Amount (Coins)</th><th data-i18n="reward_ruby">Reward (Ruby)</th></tr></thead>
           <tbody><tr><td><span class="val-pink">1,000</span></td><td><span class="val-green">1</span></td></tr></tbody>
         </table>
       </div>
       <ul class="blist" style="margin-top:10px;">
-        <li><span class="dot dot-green"></span><span>Host earns <strong>1 Ruby</strong> for every <strong>1,000 coins</strong> used in games</span></li>
-        <li><span class="dot dot-purple"></span><span>This income <strong>does NOT count</strong> toward weekly targets</span></li>
-        <li><span class="dot dot-pink"></span><span>Earnings <strong>credited instantly</strong> after each stream ends</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h2_r1">Host earns <strong>1 Ruby</strong> for every <strong>1,000 coins</strong> used in games</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="h2_r2">This income <strong>does NOT count</strong> toward weekly targets</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h2_r3">Earnings <strong>credited instantly</strong> after each stream ends</span></li>
       </ul>
     </div>
   </div>
 
-  <!-- SECTION 3: New Host Guarantee -->
+  <!-- S3 -->
   <div class="acc" id="h-acc3">
     <div class="acc-header" onclick="toggle('h-acc3')">
       <div class="acc-num n-emerald">3</div>
-      <div class="acc-title">New Host Guarantee Policy</div>
+      <div class="acc-title" data-i18n="h3_title">New Host Guarantee Policy</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Cycle</th><th>Weekly Ruby Task</th><th>Valid Days</th><th>Valid Hours</th><th>Guarantee</th></tr></thead>
+          <thead><tr><th data-i18n="cycle">Cycle</th><th data-i18n="weekly_ruby_task">Weekly Ruby Task</th><th data-i18n="valid_days">Valid Days</th><th data-i18n="valid_hours">Valid Hours</th><th data-i18n="guarantee">Guarantee</th></tr></thead>
           <tbody>
-            <tr><td>Week 1</td><td>0</td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
-            <tr><td>Week 2</td><td><span class="val-gold">50,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
-            <tr><td>Week 3</td><td><span class="val-gold">100,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
-            <tr><td>Week 4</td><td><span class="val-gold">150,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
+            <tr><td data-i18n="week1">Week 1</td><td>0</td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
+            <tr><td data-i18n="week2">Week 2</td><td><span class="val-gold">50,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
+            <tr><td data-i18n="week3">Week 3</td><td><span class="val-gold">100,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
+            <tr><td data-i18n="week4">Week 4</td><td><span class="val-gold">150,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$5</span></td></tr>
           </tbody>
         </table>
       </div>
       <ul class="blist" style="margin-top:10px;">
-        <li><span class="dot dot-green"></span><span>New hosts must be <strong>approved</strong> to get guarantee for first 4 weeks</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 1:</strong> No target – guarantee is given</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 2:</strong> 50,000 Ruby</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 3:</strong> 100,000 Ruby</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 4:</strong> 150,000 Ruby</span></li>
-        <li><span class="dot dot-purple"></span><span>Missing one week's target <strong>does not cancel</strong> next week's guarantee</span></li>
-        <li><span class="dot dot-gold"></span><span>If Valid Days &amp; Hours not met → <strong>salary under basic policy</strong></span></li>
-        <li><span class="dot dot-red"></span><span>From <strong>Week 5 onward</strong>, only <strong>basic policy applies</strong></span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h3_r1">New hosts must be <strong>approved</strong> to get guarantee for first 4 weeks</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h3_r2"><strong>Week 1:</strong> No target – guarantee is given</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h3_r3"><strong>Week 2:</strong> 50,000 Ruby</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h3_r4"><strong>Week 3:</strong> 100,000 Ruby</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h3_r5"><strong>Week 4:</strong> 150,000 Ruby</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="h3_r6">Missing one week's target <strong>does not cancel</strong> next week's guarantee</span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="h3_r7">If Valid Days &amp; Hours not met → <strong>salary under basic policy</strong></span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h3_r8">From <strong>Week 5 onward</strong>, only <strong>basic policy applies</strong></span></li>
       </ul>
     </div>
   </div>
 
-  <!-- SECTION 4: Sensual Category -->
+  <!-- S4 -->
   <div class="acc" id="h-acc4">
     <div class="acc-header" onclick="toggle('h-acc4')">
       <div class="acc-num n-pink">4</div>
-      <div class="acc-title">Sensual Category Host Policy</div>
+      <div class="acc-title" data-i18n="h4_title">Sensual Category Host Policy</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Cycle</th><th>Weekly Ruby Task</th><th>Valid Days</th><th>Valid Hours</th><th>Guarantee</th></tr></thead>
+          <thead><tr><th data-i18n="cycle">Cycle</th><th data-i18n="weekly_ruby_task">Weekly Ruby Task</th><th data-i18n="valid_days">Valid Days</th><th data-i18n="valid_hours">Valid Hours</th><th data-i18n="guarantee">Guarantee</th></tr></thead>
           <tbody>
-            <tr><td>Week 1</td><td>0</td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
-            <tr><td>Week 2</td><td><span class="val-gold">100,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
-            <tr><td>Week 3</td><td><span class="val-gold">150,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
-            <tr><td>Week 4</td><td><span class="val-gold">200,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
-            <tr><td>Week 5+</td><td><span class="val-gold">300,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
+            <tr><td data-i18n="week1">Week 1</td><td>0</td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
+            <tr><td data-i18n="week2">Week 2</td><td><span class="val-gold">100,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
+            <tr><td data-i18n="week3">Week 3</td><td><span class="val-gold">150,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
+            <tr><td data-i18n="week4">Week 4</td><td><span class="val-gold">200,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
+            <tr><td data-i18n="week5plus">Week 5+</td><td><span class="val-gold">300,000</span></td><td style="text-align:center"><span class="val-pink">4</span></td><td style="text-align:center"><span class="val-pink">10</span></td><td><span class="val-green">$15</span></td></tr>
           </tbody>
         </table>
       </div>
       <ul class="blist" style="margin-top:10px;">
-        <li><span class="dot dot-green"></span><span>Only <strong>approved hosts</strong> can join this program</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 1:</strong> No target – guarantee pay given</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 2:</strong> 100,000 Ruby</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 3:</strong> 150,000 Ruby</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 4:</strong> 200,000 Ruby</span></li>
-        <li><span class="dot dot-pink"></span><span><strong>Week 5+:</strong> 300,000 Ruby</span></li>
-        <li><span class="dot dot-purple"></span><span>Missing one week's target <strong>does not cancel</strong> next week's guarantee</span></li>
-        <li><span class="dot dot-gold"></span><span>If targets not met → <strong>salary follows basic policy</strong></span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_r1">Only <strong>approved hosts</strong> can join this program</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h4_r2"><strong>Week 1:</strong> No target – guarantee pay given</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h4_r3"><strong>Week 2:</strong> 100,000 Ruby</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h4_r4"><strong>Week 3:</strong> 150,000 Ruby</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h4_r5"><strong>Week 4:</strong> 200,000 Ruby</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="h4_r6"><strong>Week 5+:</strong> 300,000 Ruby</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="h4_r7">Missing one week's target <strong>does not cancel</strong> next week's guarantee</span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="h4_r8">If targets not met → <strong>salary follows basic policy</strong></span></li>
       </ul>
-
       <div class="divider"></div>
-
-      <div class="sub-head" style="color:#ec4899;border-color:#ec4899;">4.1 Requirements</div>
+      <div class="sub-head" style="color:#ec4899;border-color:#ec4899;" data-i18n="h4_1_head">4.1 Requirements</div>
       <ul class="blist">
-        <li><span class="dot dot-green"></span><span>Look clean and presentable</span></li>
-        <li><span class="dot dot-green"></span><span>Follow schedule and complete hours</span></li>
-        <li><span class="dot dot-green"></span><span>Keep background neat</span></li>
-        <li><span class="dot dot-green"></span><span>Maintain good audio &amp; video quality</span></li>
-        <li><span class="dot dot-green"></span><span>Actively engage with viewers</span></li>
-        <li><span class="dot dot-green"></span><span>Follow team instructions and join activities</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_req1">Look clean and presentable</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_req2">Follow schedule and complete hours</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_req3">Keep background neat</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_req4">Maintain good audio &amp; video quality</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_req5">Actively engage with viewers</span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="h4_req6">Follow team instructions and join activities</span></li>
       </ul>
-
       <div class="divider"></div>
-
-      <div class="sub-head" style="color:#ef4444;border-color:#ef4444;">4.2 Removal from Sensual Host Policy</div>
+      <div class="sub-head" style="color:#ef4444;border-color:#ef4444;" data-i18n="h4_2_head">4.2 Removal from Sensual Host Policy</div>
       <ul class="blist">
-        <li><span class="dot dot-red"></span><span>Not streaming regularly or showing bad attitude</span></li>
-        <li><span class="dot dot-red"></span><span>Ignoring or disrespecting viewers</span></li>
-        <li><span class="dot dot-red"></span><span>Messy setup with no improvement</span></li>
-        <li><span class="dot dot-red"></span><span>Not following team instructions</span></li>
-        <li><span class="dot dot-red"></span><span>Poor stream quality without fixing</span></li>
-        <li><span class="dot dot-red"></span><span>Breaking platform rules or laws</span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h4_rem1">Not streaming regularly or showing bad attitude</span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h4_rem2">Ignoring or disrespecting viewers</span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h4_rem3">Messy setup with no improvement</span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h4_rem4">Not following team instructions</span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h4_rem5">Poor stream quality without fixing</span></li>
+        <li><span class="dot dot-red"></span><span data-i18n="h4_rem6">Breaking platform rules or laws</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="footer">© 2026 &nbsp;<span class="rl">Rizz Live</span> &nbsp;·&nbsp; All Rights Reserved</div>
+  <div class="footer">© 2026 &nbsp;<span class="rl">Rizz Live</span> &nbsp;·&nbsp; <span data-i18n="all_rights">All Rights Reserved</span></div>
 </div>
 
 
-<!-- ═══════════════════════════════════════════════════
-     PAGE 3: AGENCY POLICY
-════════════════════════════════════════════════════ -->
+<!-- ═══════════════ PAGE 3: AGENCY POLICY ═══════════════ -->
 <div class="page" id="page-agency">
   <div class="header-card">
     <div class="header-logo">
@@ -582,189 +521,894 @@
     </div>
     <div>
       <div class="brand">RIZZ LIVE</div>
-      <div class="tagline">Live Streaming Platform</div>
+      <div class="tagline" data-i18n="tagline">Live Streaming Platform</div>
     </div>
   </div>
 
-  <button class="back-btn" onclick="showPage('page-home')">‹ Back</button>
+  <button class="back-btn" onclick="showPage('page-home')">‹ <span data-i18n="back">Back</span></button>
 
   <div class="section-head">
-    <div class="badge">🏢 Agency Guidelines</div>
-    <div class="page-title">Agency <span class="accent">Policy</span></div>
+    <div class="badge" data-i18n="badge_agency">🏢 Agency Guidelines</div>
+    <div class="page-title"><span data-i18n="agency_word">Agency</span> <span class="accent" data-i18n="policy_word">Policy</span></div>
     <div class="title-line"></div>
   </div>
 
-  <!-- SECTION 1: Agency Commissions -->
+  <!-- A1 -->
   <div class="acc open" id="a-acc1">
     <div class="acc-header" onclick="toggle('a-acc1')">
       <div class="acc-num n-purple">1</div>
-      <div class="acc-title">Agency Commissions</div>
+      <div class="acc-title" data-i18n="a1_title">Agency Commissions</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Level</th><th>Agency Weekly Revenue (Ruby)</th><th>Commission</th></tr></thead>
+          <thead><tr><th data-i18n="level">Level</th><th data-i18n="agency_weekly_rev">Agency Weekly Revenue (Ruby)</th><th data-i18n="commission">Commission</th></tr></thead>
           <tbody>
-            <tr><td><span class="val-pink">Lv.1</span></td><td>Below 10M</td><td><span class="val-green">16.00%</span></td></tr>
+            <tr><td><span class="val-pink">Lv.1</span></td><td data-i18n="below_10m">Below 10M</td><td><span class="val-green">16.00%</span></td></tr>
             <tr><td><span class="val-pink">Lv.2</span></td><td>10M – 30M</td><td><span class="val-green">18.00%</span></td></tr>
-            <tr><td><span class="val-pink">Lv.3</span></td><td>Above 30M</td><td><span class="val-green">20.00%</span></td></tr>
+            <tr><td><span class="val-pink">Lv.3</span></td><td data-i18n="above_30m">Above 30M</td><td><span class="val-green">20.00%</span></td></tr>
           </tbody>
         </table>
       </div>
-
-      <div class="sub-head">Agency Requirements</div>
+      <div class="sub-head" data-i18n="agency_req_head">Agency Requirements</div>
       <ul class="blist">
-        <li><span class="dot dot-pink"></span><span>Agency must have at least <strong>5 active hosts every week</strong></span></li>
-        <li><span class="dot dot-pink"></span><span>Agency must support the platform: encourage hosts to go live &amp; join platform events</span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="a1_req1">Agency must have at least <strong>5 active hosts every week</strong></span></li>
+        <li><span class="dot dot-pink"></span><span data-i18n="a1_req2">Agency must support the platform: encourage hosts to go live &amp; join platform events</span></li>
       </ul>
-
       <div class="divider"></div>
-
-      <div class="sub-head">Weekly Task Period</div>
+      <div class="sub-head" data-i18n="weekly_task_period">Weekly Task Period</div>
       <div class="info-box">
-        <div class="info-label">📅 Period</div>
+        <div class="info-label" data-i18n="period_label">📅 Period</div>
         <div class="time-row">
           <div class="time-chip">
-            <div class="tc-label">Start</div>
+            <div class="tc-label" data-i18n="start">Start</div>
             <div class="tc-val">Sunday 12:00 PM</div>
             <div class="tc-tz">EST — New York Time</div>
           </div>
           <div class="time-arrow">→</div>
           <div class="time-chip">
-            <div class="tc-label">End</div>
+            <div class="tc-label" data-i18n="end">End</div>
             <div class="tc-val">Sunday 12:00 PM</div>
             <div class="tc-tz">EST — New York Time</div>
           </div>
         </div>
-        <p style="margin-top:8px;font-size:12px;color:#9882c0;text-align:center;">Tasks reset every week on Sunday at 12:00 PM EST</p>
+        <p style="margin-top:8px;font-size:12px;color:#9882c0;text-align:center;" data-i18n="tasks_reset">Tasks reset every week on Sunday at 12:00 PM EST</p>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 2: Host Activation Salary -->
+  <!-- A2 -->
   <div class="acc" id="a-acc2">
     <div class="acc-header" onclick="toggle('a-acc2')">
       <div class="acc-num n-indigo">2</div>
-      <div class="acc-title">Host Activation Salary Policy</div>
+      <div class="acc-title" data-i18n="a2_title">Host Activation Salary Policy</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Agency Level</th><th>Monthly Target (Rubies)</th><th>Active Hosts</th><th>Basic Pay</th></tr></thead>
+          <thead><tr><th data-i18n="agency_level">Agency Level</th><th data-i18n="monthly_target">Monthly Target (Rubies)</th><th data-i18n="active_hosts">Active Hosts</th><th data-i18n="basic_pay">Basic Pay</th></tr></thead>
           <tbody>
-            <tr><td><span class="val-pink">L1</span></td><td>Below 10M</td><td>–</td><td>–</td></tr>
-            <tr><td><span class="val-pink">L2</span></td><td>Above 10M</td><td><span class="val-pink">20</span></td><td><span class="val-green">$25</span></td></tr>
-            <tr><td><span class="val-pink">L3</span></td><td>Above 50M</td><td><span class="val-pink">30</span></td><td><span class="val-green">$225</span></td></tr>
-            <tr><td><span class="val-pink">L4</span></td><td>Above 100M</td><td><span class="val-pink">50</span></td><td><span class="val-green">$500</span></td></tr>
-            <tr><td><span class="val-pink">L5</span></td><td>Above 200M</td><td><span class="val-pink">50</span></td><td><span class="val-green">$1,000</span></td></tr>
+            <tr><td><span class="val-pink">L1</span></td><td data-i18n="below_10m">Below 10M</td><td>–</td><td>–</td></tr>
+            <tr><td><span class="val-pink">L2</span></td><td data-i18n="above_10m">Above 10M</td><td><span class="val-pink">20</span></td><td><span class="val-green">$25</span></td></tr>
+            <tr><td><span class="val-pink">L3</span></td><td data-i18n="above_50m">Above 50M</td><td><span class="val-pink">30</span></td><td><span class="val-green">$225</span></td></tr>
+            <tr><td><span class="val-pink">L4</span></td><td data-i18n="above_100m">Above 100M</td><td><span class="val-pink">50</span></td><td><span class="val-green">$500</span></td></tr>
+            <tr><td><span class="val-pink">L5</span></td><td data-i18n="above_200m">Above 200M</td><td><span class="val-pink">50</span></td><td><span class="val-green">$1,000</span></td></tr>
           </tbody>
         </table>
       </div>
-      <p style="font-size:13px;color:#374151;margin:10px 0 8px;">An agency receives a <strong>monthly basic salary</strong> if it:</p>
+      <p style="font-size:13px;color:#374151;margin:10px 0 8px;" data-i18n="a2_intro">An agency receives a <strong>monthly basic salary</strong> if it:</p>
       <ul class="blist">
-        <li><span class="dot dot-green"></span><span>Meets the <strong>monthly Rubies target</strong></span></li>
-        <li><span class="dot dot-green"></span><span>Maintains the <strong>required number of active hosts</strong></span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="a2_r1">Meets the <strong>monthly Rubies target</strong></span></li>
+        <li><span class="dot dot-green"></span><span data-i18n="a2_r2">Maintains the <strong>required number of active hosts</strong></span></li>
       </ul>
-
       <div class="divider"></div>
-
-      <div class="sub-head" style="color:#6366f1;border-color:#6366f1;">Definition: Active Host</div>
-      <p style="font-size:13px;color:#374151;margin-bottom:8px;">A host is counted as active if they:</p>
+      <div class="sub-head" style="color:#6366f1;border-color:#6366f1;" data-i18n="def_active_host">Definition: Active Host</div>
+      <p style="font-size:13px;color:#374151;margin-bottom:8px;" data-i18n="active_host_intro">A host is counted as active if they:</p>
       <ul class="blist">
-        <li><span class="dot dot-purple"></span><span>Complete at least <strong>10 valid days</strong> in a month</span></li>
-        <li><span class="dot dot-purple"></span><span>Complete at least <strong>20 valid hours</strong> in a month</span></li>
-        <li><span class="dot dot-purple"></span><span>Earn <strong>100,000 Rubies or more</strong> in gifts in a month</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ah_r1">Complete at least <strong>10 valid days</strong> in a month</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ah_r2">Complete at least <strong>20 valid hours</strong> in a month</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ah_r3">Earn <strong>100,000 Rubies or more</strong> in gifts in a month</span></li>
       </ul>
       <div class="strict-box">
-        <div class="strict-label">⚠ Important</div>
-        <p>Failure to meet either the Monthly Revenue Target or Active Host Requirement will result in <span class="hl-red">Host Activation Salary Policy disqualification</span>.</p>
+        <div class="strict-label" data-i18n="important_label">⚠ Important</div>
+        <p data-i18n="a2_strict">Failure to meet either the Monthly Revenue Target or Active Host Requirement will result in <span class="hl-red">Host Activation Salary Policy disqualification</span>.</p>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 3: Commission Payout -->
+  <!-- A3 -->
   <div class="acc" id="a-acc3">
     <div class="acc-header" onclick="toggle('a-acc3')">
       <div class="acc-num n-emerald">3</div>
-      <div class="acc-title">Commission Payout</div>
+      <div class="acc-title" data-i18n="a3_title">Commission Payout</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <div class="amber-box">
-        <div class="amber-label">💰 Payout</div>
-        <p>Commissions are paid <span class="hl-gold">every Monday in Rubies</span>.</p>
+        <div class="amber-label" data-i18n="payout_label">💰 Payout</div>
+        <p data-i18n="a3_payout">Commissions are paid <span class="hl-gold">every Monday in Rubies</span>.</p>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 4: Withdrawal Rules -->
+  <!-- A4 -->
   <div class="acc" id="a-acc4">
     <div class="acc-header" onclick="toggle('a-acc4')">
       <div class="acc-num n-amber">4</div>
-      <div class="acc-title">Withdrawal Rules</div>
+      <div class="acc-title" data-i18n="a4_title">Withdrawal Rules</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
       <ul class="blist" style="margin-bottom:14px;">
-        <li><span class="dot dot-gold"></span><span>Withdrawal requests can be submitted <strong>once per day</strong></span></li>
-        <li><span class="dot dot-gold"></span><span>Minimum withdrawal amount: <span class="hl-green">$10 USD</span></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="a4_r1">Withdrawal requests can be submitted <strong>once per day</strong></span></li>
+        <li><span class="dot dot-gold"></span><span data-i18n="a4_r2">Minimum withdrawal amount: <span class="hl-green">$10 USD</span></span></li>
       </ul>
-      <div class="sub-head" style="color:#d97706;border-color:#d97706;">Withdrawal Fee Structure</div>
+      <div class="sub-head" style="color:#d97706;border-color:#d97706;" data-i18n="withdrawal_fee_head">Withdrawal Fee Structure</div>
       <div class="tbl-wrap">
         <table class="tbl">
-          <thead><tr><th>Withdrawal Amount</th><th>Fee Applied</th></tr></thead>
+          <thead><tr><th data-i18n="withdrawal_amount">Withdrawal Amount</th><th data-i18n="fee_applied">Fee Applied</th></tr></thead>
           <tbody>
-            <tr><td>Less than $100</td><td><span class="val-pink">Flat fee of $2 per transaction</span></td></tr>
-            <tr><td>$100 and above</td><td><span class="val-pink">2% of the withdrawal amount</span></td></tr>
+            <tr><td data-i18n="less_than_100">Less than $100</td><td><span class="val-pink" data-i18n="fee_flat">Flat fee of $2 per transaction</span></td></tr>
+            <tr><td data-i18n="100_above">$100 and above</td><td><span class="val-pink" data-i18n="fee_pct">2% of the withdrawal amount</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- SECTION 5: Agency Change Rules -->
+  <!-- A5 -->
   <div class="acc" id="a-acc5">
     <div class="acc-header" onclick="toggle('a-acc5')">
       <div class="acc-num n-pink">5</div>
-      <div class="acc-title">Agency Change Rules</div>
+      <div class="acc-title" data-i18n="a5_title">Agency Change Rules</div>
       <div class="acc-chevron">⌄</div>
     </div>
     <div class="acc-body">
-      <p style="font-size:13px;color:#374151;margin-bottom:8px;">A host can change agency if:</p>
+      <p style="font-size:13px;color:#374151;margin-bottom:8px;" data-i18n="agency_change_intro">A host can change agency if:</p>
       <ul class="blist">
-        <li><span class="dot dot-purple"></span><span>No activity for <strong>120 days</strong></span></li>
-        <li><span class="dot dot-purple"></span><span>Cannot contact agency for <strong>2 weeks</strong></span></li>
-        <li><span class="dot dot-purple"></span><span>Both Agency &amp; Host sides agree</span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="a5_r1">No activity for <strong>120 days</strong></span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="ac_r2">Cannot contact agency for <strong>2 weeks</strong></span></li>
+        <li><span class="dot dot-purple"></span><span data-i18n="a5_r3">Both Agency &amp; Host sides agree</span></li>
       </ul>
       <div class="strict-box">
-        <div class="strict-label">⚠ Important</div>
-        <p>Any cheating or misuse → <span class="hl-red">Warning / Suspension / Ban</span></p>
+        <div class="strict-label" data-i18n="important_label">⚠ Important</div>
+        <p data-i18n="a5_strict">Any cheating or misuse → <span class="hl-red">Warning / Suspension / Ban</span></p>
       </div>
     </div>
   </div>
 
-  <div class="footer">© 2026 &nbsp;<span class="rl">Rizz Live</span> &nbsp;·&nbsp; All Rights Reserved</div>
+  <div class="footer">© 2026 &nbsp;<span class="rl">Rizz Live</span> &nbsp;·&nbsp; <span data-i18n="all_rights">All Rights Reserved</span></div>
 </div>
 
 
 <script>
-  // ── Page navigation ──────────────────────────────
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-    var target = document.getElementById(id);
-    if (target) {
-      target.classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }
+// ── Page navigation ──────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  var t = document.getElementById(id);
+  if (t) { t.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+}
 
-  // ── Accordion toggle ─────────────────────────────
-  function toggle(id) {
-    var el = document.getElementById(id);
-    if (el) el.classList.toggle('open');
+// ── Accordion toggle ─────────────────────────────
+function toggle(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+// ── Language switcher ────────────────────────────
+function toggleLang() {
+  var btn = document.getElementById('langToggle');
+  var dd = document.getElementById('langDropdown');
+  btn.classList.toggle('open');
+  dd.classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  var btn = document.getElementById('langToggle');
+  var dd = document.getElementById('langDropdown');
+  if (!btn.contains(e.target) && !dd.contains(e.target)) {
+    btn.classList.remove('open');
+    dd.classList.remove('open');
   }
+});
+
+var langMeta = {
+  en: { flag: '🇬🇧', label: 'English' },
+  es: { flag: '🇪🇸', label: 'Español' },
+  pt: { flag: '🇧🇷', label: 'Português (BR)' },
+  ru: { flag: '🇷🇺', label: 'Русский' },
+  uk: { flag: '🇺🇦', label: 'Українська' }
+};
+
+var translations = {
+  en: {
+    tagline: 'Live Streaming Platform',
+    badge_home: '📋 Official Documents',
+    policy_word: 'Policy',
+    label_policies: 'Policies',
+    host_policy_title: 'HOST POLICY',
+    host_policy_sub: 'Rules & guidelines for hosts',
+    agency_policy_title: 'AGENCY POLICY',
+    agency_policy_sub: 'Agency terms & conditions',
+    label_contact: 'Contact',
+    contact_title: 'CONTACT US',
+    contact_sub: 'Get in touch with Country Manager',
+    channel_title: 'JOIN OFFICIAL CHANNEL',
+    channel_sub: 'Daily updates on WhatsApp',
+    all_rights: 'All Rights Reserved',
+    back: 'Back',
+    badge_host: '🎙 Host Guidelines',
+    host_word: 'Host',
+    badge_agency: '🏢 Agency Guidelines',
+    agency_word: 'Agency',
+    h1_title: 'Host Salary Structure',
+    h1_1_head: '1.1 Personal Gift Share',
+    basic_share: 'Basic Share',
+    host_share: 'Host Share',
+    example_label: '🔥 Example',
+    h1_1_example: 'If a user sends <span class="hl-gold">10K Coins</span> during a live broadcast, the host will receive <span class="hl-gold">10K Rubies</span>.',
+    h1_2_head: '1.2 Host Weekly Bonus',
+    valid_hours_target: 'Valid Hours Target',
+    valid_days_target: 'Valid Days Target',
+    weekly_bonus: 'Weekly Bonus',
+    h1_2_example: 'If a host earns <span class="hl-gold">100K Rubies</span> in one week <span class="hl-pink">(Sunday 12:00 PM to Sunday 12:00 PM – EST New York Time)</span>, they receive a <span class="hl-gold">30K Ruby bonus (30%)</span>, credited on <span class="hl-purple">Monday</span>.',
+    h1_2_to_get: 'To get this bonus, the host must:',
+    h1_2_req1: 'Complete at least <strong>4 active days</strong>',
+    h1_2_req2: 'Stream a total of <strong>10 hours</strong> in the week',
+    h1_3_head: '1.3 Rules',
+    rule_withdrawal_rate: '<strong>Withdrawal Rate:</strong> <span class="hl-gold">20,000 Ruby = 1 USD</span>',
+    rule_day_change: '<strong>Day Change:</strong> Daily at <span class="hl-pink">12:00 PM (EST – New York Time)</span>',
+    rule_weekly_period: '<strong>Weekly Period:</strong> <span class="hl-pink">Sunday 12:00 PM to Sunday 12:00 PM (EST – New York Time)</span>',
+    rule_valid_day: '<strong>Valid Day:</strong> Minimum <span class="hl-gold">120 minutes (2 hours)</span> Live',
+    rule_valid_hour: '<strong>Valid Hour:</strong> 60+ minutes = <span class="hl-gold">1 valid hour</span>',
+    rule_min_live: '<strong>Minimum Live Time:</strong> Sessions below <strong>30 minutes</strong> not counted',
+    rule_bonus_pay: '<strong>Bonus Payment:</strong> Every <span class="hl-purple">Monday (in Rubies)</span>',
+    rule_withdrawal: '<strong>Withdrawal:</strong> Once per day, Minimum = <span class="hl-green">$10 USD</span>',
+    agency_change_head: 'Agency Change Rules',
+    agency_change_intro: 'A host can change agency if:',
+    ac_r1: 'No live for <strong>120 days</strong>',
+    ac_r2: 'Cannot contact agency for <strong>2 weeks</strong>',
+    ac_r3: 'Both host and agency agree',
+    strict_rule: '⚠ Strict Rule',
+    ac_strict: 'Any misuse or cheating during transfer → <span class="hl-red">Warning / Suspension / Ban</span>',
+    h2_title: 'Host Game Commissions',
+    bet_amount: 'Bet Amount (Coins)',
+    reward_ruby: 'Reward (Ruby)',
+    h2_r1: 'Host earns <strong>1 Ruby</strong> for every <strong>1,000 coins</strong> used in games',
+    h2_r2: 'This income <strong>does NOT count</strong> toward weekly targets',
+    h2_r3: 'Earnings <strong>credited instantly</strong> after each stream ends',
+    h3_title: 'New Host Guarantee Policy',
+    cycle: 'Cycle',
+    weekly_ruby_task: 'Weekly Ruby Task',
+    valid_days: 'Valid Days',
+    valid_hours: 'Valid Hours',
+    guarantee: 'Guarantee',
+    week1: 'Week 1', week2: 'Week 2', week3: 'Week 3', week4: 'Week 4', week5plus: 'Week 5+',
+    h3_r1: 'New hosts must be <strong>approved</strong> to get guarantee for first 4 weeks',
+    h3_r2: '<strong>Week 1:</strong> No target – guarantee is given',
+    h3_r3: '<strong>Week 2:</strong> 50,000 Ruby',
+    h3_r4: '<strong>Week 3:</strong> 100,000 Ruby',
+    h3_r5: '<strong>Week 4:</strong> 150,000 Ruby',
+    h3_r6: 'Missing one week\'s target <strong>does not cancel</strong> next week\'s guarantee',
+    h3_r7: 'If Valid Days & Hours not met → <strong>salary under basic policy</strong>',
+    h3_r8: 'From <strong>Week 5 onward</strong>, only <strong>basic policy applies</strong>',
+    h4_title: 'Sensual Category Host Policy',
+    h4_r1: 'Only <strong>approved hosts</strong> can join this program',
+    h4_r2: '<strong>Week 1:</strong> No target – guarantee pay given',
+    h4_r3: '<strong>Week 2:</strong> 100,000 Ruby',
+    h4_r4: '<strong>Week 3:</strong> 150,000 Ruby',
+    h4_r5: '<strong>Week 4:</strong> 200,000 Ruby',
+    h4_r6: '<strong>Week 5+:</strong> 300,000 Ruby',
+    h4_r7: 'Missing one week\'s target <strong>does not cancel</strong> next week\'s guarantee',
+    h4_r8: 'If targets not met → <strong>salary follows basic policy</strong>',
+    h4_1_head: '4.1 Requirements',
+    h4_req1: 'Look clean and presentable',
+    h4_req2: 'Follow schedule and complete hours',
+    h4_req3: 'Keep background neat',
+    h4_req4: 'Maintain good audio & video quality',
+    h4_req5: 'Actively engage with viewers',
+    h4_req6: 'Follow team instructions and join activities',
+    h4_2_head: '4.2 Removal from Sensual Host Policy',
+    h4_rem1: 'Not streaming regularly or showing bad attitude',
+    h4_rem2: 'Ignoring or disrespecting viewers',
+    h4_rem3: 'Messy setup with no improvement',
+    h4_rem4: 'Not following team instructions',
+    h4_rem5: 'Poor stream quality without fixing',
+    h4_rem6: 'Breaking platform rules or laws',
+    a1_title: 'Agency Commissions',
+    level: 'Level',
+    agency_weekly_rev: 'Agency Weekly Revenue (Ruby)',
+    commission: 'Commission',
+    below_10m: 'Below 10M',
+    above_30m: 'Above 30M',
+    agency_req_head: 'Agency Requirements',
+    a1_req1: 'Agency must have at least <strong>5 active hosts every week</strong>',
+    a1_req2: 'Agency must support the platform: encourage hosts to go live & join platform events',
+    weekly_task_period: 'Weekly Task Period',
+    period_label: '📅 Period',
+    start: 'Start', end: 'End',
+    tasks_reset: 'Tasks reset every week on Sunday at 12:00 PM EST',
+    a2_title: 'Host Activation Salary Policy',
+    agency_level: 'Agency Level',
+    monthly_target: 'Monthly Target (Rubies)',
+    active_hosts: 'Active Hosts',
+    basic_pay: 'Basic Pay',
+    above_10m: 'Above 10M', above_50m: 'Above 50M', above_100m: 'Above 100M', above_200m: 'Above 200M',
+    a2_intro: 'An agency receives a <strong>monthly basic salary</strong> if it:',
+    a2_r1: 'Meets the <strong>monthly Rubies target</strong>',
+    a2_r2: 'Maintains the <strong>required number of active hosts</strong>',
+    def_active_host: 'Definition: Active Host',
+    active_host_intro: 'A host is counted as active if they:',
+    ah_r1: 'Complete at least <strong>10 valid days</strong> in a month',
+    ah_r2: 'Complete at least <strong>20 valid hours</strong> in a month',
+    ah_r3: 'Earn <strong>100,000 Rubies or more</strong> in gifts in a month',
+    important_label: '⚠ Important',
+    a2_strict: 'Failure to meet either the Monthly Revenue Target or Active Host Requirement will result in <span class="hl-red">Host Activation Salary Policy disqualification</span>.',
+    a3_title: 'Commission Payout',
+    payout_label: '💰 Payout',
+    a3_payout: 'Commissions are paid <span class="hl-gold">every Monday in Rubies</span>.',
+    a4_title: 'Withdrawal Rules',
+    a4_r1: 'Withdrawal requests can be submitted <strong>once per day</strong>',
+    a4_r2: 'Minimum withdrawal amount: <span class="hl-green">$10 USD</span>',
+    withdrawal_fee_head: 'Withdrawal Fee Structure',
+    withdrawal_amount: 'Withdrawal Amount',
+    fee_applied: 'Fee Applied',
+    less_than_100: 'Less than $100',
+    fee_flat: 'Flat fee of $2 per transaction',
+    '100_above': '$100 and above',
+    fee_pct: '2% of the withdrawal amount',
+    a5_title: 'Agency Change Rules',
+    a5_r1: 'No activity for <strong>120 days</strong>',
+    a5_r3: 'Both Agency & Host sides agree',
+    a5_strict: 'Any cheating or misuse → <span class="hl-red">Warning / Suspension / Ban</span>'
+  },
+
+  es: {
+    tagline: 'Plataforma de Streaming en Vivo',
+    badge_home: '📋 Documentos Oficiales',
+    policy_word: 'Política',
+    label_policies: 'Políticas',
+    host_policy_title: 'POLÍTICA DE HOST',
+    host_policy_sub: 'Reglas y pautas para hosts',
+    agency_policy_title: 'POLÍTICA DE AGENCIA',
+    agency_policy_sub: 'Términos y condiciones de agencia',
+    label_contact: 'Contacto',
+    contact_title: 'CONTÁCTENOS',
+    contact_sub: 'Comunícate con el Country Manager',
+    channel_title: 'UNIRSE AL CANAL OFICIAL',
+    channel_sub: 'Actualizaciones diarias en WhatsApp',
+    all_rights: 'Todos los Derechos Reservados',
+    back: 'Volver',
+    badge_host: '🎙 Pautas para Hosts',
+    host_word: 'Host',
+    badge_agency: '🏢 Pautas de Agencia',
+    agency_word: 'Agencia',
+    h1_title: 'Estructura Salarial del Host',
+    h1_1_head: '1.1 Participación en Regalos Personales',
+    basic_share: 'Participación Básica',
+    host_share: 'Participación del Host',
+    example_label: '🔥 Ejemplo',
+    h1_1_example: 'Si un usuario envía <span class="hl-gold">10K Monedas</span> durante una transmisión en vivo, el host recibirá <span class="hl-gold">10K Rubíes</span>.',
+    h1_2_head: '1.2 Bono Semanal del Host',
+    valid_hours_target: 'Meta de Horas Válidas',
+    valid_days_target: 'Meta de Días Válidos',
+    weekly_bonus: 'Bono Semanal',
+    h1_2_example: 'Si un host gana <span class="hl-gold">100K Rubíes</span> en una semana <span class="hl-pink">(domingo 12:00 PM a domingo 12:00 PM – EST hora de Nueva York)</span>, recibe un <span class="hl-gold">bono de 30K Rubíes (30%)</span>, acreditado el <span class="hl-purple">lunes</span>.',
+    h1_2_to_get: 'Para obtener este bono, el host debe:',
+    h1_2_req1: 'Completar al menos <strong>4 días activos</strong>',
+    h1_2_req2: 'Transmitir un total de <strong>10 horas</strong> en la semana',
+    h1_3_head: '1.3 Reglas',
+    rule_withdrawal_rate: '<strong>Tasa de Retiro:</strong> <span class="hl-gold">20,000 Rubíes = 1 USD</span>',
+    rule_day_change: '<strong>Cambio de Día:</strong> Diariamente a las <span class="hl-pink">12:00 PM (EST – hora de Nueva York)</span>',
+    rule_weekly_period: '<strong>Período Semanal:</strong> <span class="hl-pink">Domingo 12:00 PM a domingo 12:00 PM (EST – hora de Nueva York)</span>',
+    rule_valid_day: '<strong>Día Válido:</strong> Mínimo <span class="hl-gold">120 minutos (2 horas)</span> en vivo',
+    rule_valid_hour: '<strong>Hora Válida:</strong> 60+ minutos = <span class="hl-gold">1 hora válida</span>',
+    rule_min_live: '<strong>Tiempo Mínimo en Vivo:</strong> Sesiones de menos de <strong>30 minutos</strong> no cuentan',
+    rule_bonus_pay: '<strong>Pago de Bono:</strong> Cada <span class="hl-purple">lunes (en Rubíes)</span>',
+    rule_withdrawal: '<strong>Retiro:</strong> Una vez al día, Mínimo = <span class="hl-green">$10 USD</span>',
+    agency_change_head: 'Reglas de Cambio de Agencia',
+    agency_change_intro: 'Un host puede cambiar de agencia si:',
+    ac_r1: 'Sin transmisión por <strong>120 días</strong>',
+    ac_r2: 'No puede contactar a la agencia por <strong>2 semanas</strong>',
+    ac_r3: 'Tanto el host como la agencia están de acuerdo',
+    strict_rule: '⚠ Regla Estricta',
+    ac_strict: 'Cualquier abuso o trampa durante la transferencia → <span class="hl-red">Advertencia / Suspensión / Ban</span>',
+    h2_title: 'Comisiones de Juegos del Host',
+    bet_amount: 'Monto de Apuesta (Monedas)',
+    reward_ruby: 'Recompensa (Rubí)',
+    h2_r1: 'El host gana <strong>1 Rubí</strong> por cada <strong>1,000 monedas</strong> usadas en juegos',
+    h2_r2: 'Este ingreso <strong>NO cuenta</strong> para las metas semanales',
+    h2_r3: 'Las ganancias se <strong>acreditan instantáneamente</strong> al finalizar cada transmisión',
+    h3_title: 'Política de Garantía para Nuevos Hosts',
+    cycle: 'Ciclo', weekly_ruby_task: 'Meta Semanal de Rubíes', valid_days: 'Días Válidos', valid_hours: 'Horas Válidas', guarantee: 'Garantía',
+    week1: 'Semana 1', week2: 'Semana 2', week3: 'Semana 3', week4: 'Semana 4', week5plus: 'Semana 5+',
+    h3_r1: 'Los nuevos hosts deben ser <strong>aprobados</strong> para obtener garantía las primeras 4 semanas',
+    h3_r2: '<strong>Semana 1:</strong> Sin meta – se otorga la garantía',
+    h3_r3: '<strong>Semana 2:</strong> 50,000 Rubíes',
+    h3_r4: '<strong>Semana 3:</strong> 100,000 Rubíes',
+    h3_r5: '<strong>Semana 4:</strong> 150,000 Rubíes',
+    h3_r6: 'No alcanzar la meta de una semana <strong>no cancela</strong> la garantía de la siguiente',
+    h3_r7: 'Si no se cumplen días/horas válidos → <strong>salario bajo política básica</strong>',
+    h3_r8: 'Desde la <strong>Semana 5 en adelante</strong>, solo aplica la <strong>política básica</strong>',
+    h4_title: 'Política de Host Categoría Sensual',
+    h4_r1: 'Solo <strong>hosts aprobados</strong> pueden unirse a este programa',
+    h4_r2: '<strong>Semana 1:</strong> Sin meta – se otorga garantía',
+    h4_r3: '<strong>Semana 2:</strong> 100,000 Rubíes',
+    h4_r4: '<strong>Semana 3:</strong> 150,000 Rubíes',
+    h4_r5: '<strong>Semana 4:</strong> 200,000 Rubíes',
+    h4_r6: '<strong>Semana 5+:</strong> 300,000 Rubíes',
+    h4_r7: 'No alcanzar la meta <strong>no cancela</strong> la garantía de la siguiente semana',
+    h4_r8: 'Si no se cumplen metas → <strong>salario sigue política básica</strong>',
+    h4_1_head: '4.1 Requisitos',
+    h4_req1: 'Tener apariencia limpia y presentable',
+    h4_req2: 'Seguir el horario y completar las horas',
+    h4_req3: 'Mantener el fondo ordenado',
+    h4_req4: 'Mantener buena calidad de audio y video',
+    h4_req5: 'Interactuar activamente con los espectadores',
+    h4_req6: 'Seguir instrucciones del equipo y participar en actividades',
+    h4_2_head: '4.2 Eliminación de la Política de Host Sensual',
+    h4_rem1: 'No transmitir regularmente o mostrar mala actitud',
+    h4_rem2: 'Ignorar o faltar el respeto a los espectadores',
+    h4_rem3: 'Configuración desordenada sin mejoría',
+    h4_rem4: 'No seguir instrucciones del equipo',
+    h4_rem5: 'Mala calidad de transmisión sin corrección',
+    h4_rem6: 'Violar reglas de la plataforma o leyes',
+    a1_title: 'Comisiones de Agencia',
+    level: 'Nivel', agency_weekly_rev: 'Ingresos Semanales de Agencia (Rubí)', commission: 'Comisión',
+    below_10m: 'Menos de 10M', above_30m: 'Más de 30M',
+    agency_req_head: 'Requisitos de la Agencia',
+    a1_req1: 'La agencia debe tener al menos <strong>5 hosts activos cada semana</strong>',
+    a1_req2: 'La agencia debe apoyar la plataforma: animar a los hosts a transmitir y participar en eventos',
+    weekly_task_period: 'Período de Tareas Semanales',
+    period_label: '📅 Período', start: 'Inicio', end: 'Fin',
+    tasks_reset: 'Las tareas se reinician cada semana el domingo a las 12:00 PM EST',
+    a2_title: 'Política de Salario de Activación de Host',
+    agency_level: 'Nivel de Agencia', monthly_target: 'Meta Mensual (Rubíes)', active_hosts: 'Hosts Activos', basic_pay: 'Pago Básico',
+    above_10m: 'Más de 10M', above_50m: 'Más de 50M', above_100m: 'Más de 100M', above_200m: 'Más de 200M',
+    a2_intro: 'Una agencia recibe un <strong>salario básico mensual</strong> si:',
+    a2_r1: 'Cumple la <strong>meta mensual de Rubíes</strong>',
+    a2_r2: 'Mantiene el <strong>número requerido de hosts activos</strong>',
+    def_active_host: 'Definición: Host Activo',
+    active_host_intro: 'Un host se considera activo si:',
+    ah_r1: 'Completa al menos <strong>10 días válidos</strong> en un mes',
+    ah_r2: 'Completa al menos <strong>20 horas válidas</strong> en un mes',
+    ah_r3: 'Gana <strong>100,000 Rubíes o más</strong> en regalos en un mes',
+    important_label: '⚠ Importante',
+    a2_strict: 'No cumplir la Meta de Ingresos Mensuales o el Requisito de Hosts Activos resultará en <span class="hl-red">descalificación de la Política de Salario de Activación</span>.',
+    a3_title: 'Pago de Comisiones',
+    payout_label: '💰 Pago',
+    a3_payout: 'Las comisiones se pagan <span class="hl-gold">cada lunes en Rubíes</span>.',
+    a4_title: 'Reglas de Retiro',
+    a4_r1: 'Las solicitudes de retiro se pueden enviar <strong>una vez al día</strong>',
+    a4_r2: 'Monto mínimo de retiro: <span class="hl-green">$10 USD</span>',
+    withdrawal_fee_head: 'Estructura de Tarifas de Retiro',
+    withdrawal_amount: 'Monto de Retiro', fee_applied: 'Tarifa Aplicada',
+    less_than_100: 'Menos de $100', fee_flat: 'Tarifa fija de $2 por transacción',
+    '100_above': '$100 o más', fee_pct: '2% del monto de retiro',
+    a5_title: 'Reglas de Cambio de Agencia',
+    a5_r1: 'Sin actividad por <strong>120 días</strong>',
+    a5_r3: 'Tanto la Agencia como el Host están de acuerdo',
+    a5_strict: 'Cualquier trampa o abuso → <span class="hl-red">Advertencia / Suspensión / Ban</span>'
+  },
+
+  pt: {
+    tagline: 'Plataforma de Streaming ao Vivo',
+    badge_home: '📋 Documentos Oficiais',
+    policy_word: 'Política',
+    label_policies: 'Políticas',
+    host_policy_title: 'POLÍTICA DO HOST',
+    host_policy_sub: 'Regras e diretrizes para hosts',
+    agency_policy_title: 'POLÍTICA DA AGÊNCIA',
+    agency_policy_sub: 'Termos e condições da agência',
+    label_contact: 'Contato',
+    contact_title: 'FALE CONOSCO',
+    contact_sub: 'Entre em contato com o Country Manager',
+    channel_title: 'ENTRAR NO CANAL OFICIAL',
+    channel_sub: 'Atualizações diárias no WhatsApp',
+    all_rights: 'Todos os Direitos Reservados',
+    back: 'Voltar',
+    badge_host: '🎙 Diretrizes do Host',
+    host_word: 'Host',
+    badge_agency: '🏢 Diretrizes da Agência',
+    agency_word: 'Agência',
+    h1_title: 'Estrutura Salarial do Host',
+    h1_1_head: '1.1 Participação em Presentes Pessoais',
+    basic_share: 'Participação Básica',
+    host_share: 'Participação do Host',
+    example_label: '🔥 Exemplo',
+    h1_1_example: 'Se um usuário enviar <span class="hl-gold">10K Moedas</span> durante uma transmissão ao vivo, o host receberá <span class="hl-gold">10K Rubis</span>.',
+    h1_2_head: '1.2 Bônus Semanal do Host',
+    valid_hours_target: 'Meta de Horas Válidas',
+    valid_days_target: 'Meta de Dias Válidos',
+    weekly_bonus: 'Bônus Semanal',
+    h1_2_example: 'Se um host ganhar <span class="hl-gold">100K Rubis</span> em uma semana <span class="hl-pink">(domingo 12:00 PM a domingo 12:00 PM – horário EST de Nova York)</span>, recebe um <span class="hl-gold">bônus de 30K Rubis (30%)</span>, creditado na <span class="hl-purple">segunda-feira</span>.',
+    h1_2_to_get: 'Para obter este bônus, o host deve:',
+    h1_2_req1: 'Completar pelo menos <strong>4 dias ativos</strong>',
+    h1_2_req2: 'Transmitir um total de <strong>10 horas</strong> na semana',
+    h1_3_head: '1.3 Regras',
+    rule_withdrawal_rate: '<strong>Taxa de Saque:</strong> <span class="hl-gold">20.000 Rubis = 1 USD</span>',
+    rule_day_change: '<strong>Mudança de Dia:</strong> Diariamente às <span class="hl-pink">12:00 PM (EST – horário de Nova York)</span>',
+    rule_weekly_period: '<strong>Período Semanal:</strong> <span class="hl-pink">Domingo 12:00 PM a domingo 12:00 PM (EST – horário de Nova York)</span>',
+    rule_valid_day: '<strong>Dia Válido:</strong> Mínimo de <span class="hl-gold">120 minutos (2 horas)</span> ao vivo',
+    rule_valid_hour: '<strong>Hora Válida:</strong> 60+ minutos = <span class="hl-gold">1 hora válida</span>',
+    rule_min_live: '<strong>Tempo Mínimo ao Vivo:</strong> Sessões abaixo de <strong>30 minutos</strong> não contam',
+    rule_bonus_pay: '<strong>Pagamento de Bônus:</strong> Toda <span class="hl-purple">segunda-feira (em Rubis)</span>',
+    rule_withdrawal: '<strong>Saque:</strong> Uma vez por dia, Mínimo = <span class="hl-green">$10 USD</span>',
+    agency_change_head: 'Regras de Mudança de Agência',
+    agency_change_intro: 'Um host pode mudar de agência se:',
+    ac_r1: 'Sem transmissão por <strong>120 dias</strong>',
+    ac_r2: 'Não consegue contatar a agência por <strong>2 semanas</strong>',
+    ac_r3: 'Tanto o host quanto a agência concordam',
+    strict_rule: '⚠ Regra Estrita',
+    ac_strict: 'Qualquer abuso ou trapaça durante a transferência → <span class="hl-red">Aviso / Suspensão / Ban</span>',
+    h2_title: 'Comissões de Jogos do Host',
+    bet_amount: 'Valor da Aposta (Moedas)',
+    reward_ruby: 'Recompensa (Rubi)',
+    h2_r1: 'O host ganha <strong>1 Rubi</strong> para cada <strong>1.000 moedas</strong> usadas em jogos',
+    h2_r2: 'Esta renda <strong>NÃO conta</strong> para metas semanais',
+    h2_r3: 'Ganhos <strong>creditados instantaneamente</strong> após cada transmissão',
+    h3_title: 'Política de Garantia para Novos Hosts',
+    cycle: 'Ciclo', weekly_ruby_task: 'Meta Semanal de Rubis', valid_days: 'Dias Válidos', valid_hours: 'Horas Válidas', guarantee: 'Garantia',
+    week1: 'Semana 1', week2: 'Semana 2', week3: 'Semana 3', week4: 'Semana 4', week5plus: 'Semana 5+',
+    h3_r1: 'Novos hosts devem ser <strong>aprovados</strong> para receber garantia nas primeiras 4 semanas',
+    h3_r2: '<strong>Semana 1:</strong> Sem meta – garantia concedida',
+    h3_r3: '<strong>Semana 2:</strong> 50.000 Rubis',
+    h3_r4: '<strong>Semana 3:</strong> 100.000 Rubis',
+    h3_r5: '<strong>Semana 4:</strong> 150.000 Rubis',
+    h3_r6: 'Não atingir a meta de uma semana <strong>não cancela</strong> a garantia da próxima',
+    h3_r7: 'Se dias/horas válidos não forem cumpridos → <strong>salário sob política básica</strong>',
+    h3_r8: 'Da <strong>Semana 5 em diante</strong>, apenas a <strong>política básica se aplica</strong>',
+    h4_title: 'Política de Host Categoria Sensual',
+    h4_r1: 'Apenas <strong>hosts aprovados</strong> podem participar deste programa',
+    h4_r2: '<strong>Semana 1:</strong> Sem meta – garantia concedida',
+    h4_r3: '<strong>Semana 2:</strong> 100.000 Rubis',
+    h4_r4: '<strong>Semana 3:</strong> 150.000 Rubis',
+    h4_r5: '<strong>Semana 4:</strong> 200.000 Rubis',
+    h4_r6: '<strong>Semana 5+:</strong> 300.000 Rubis',
+    h4_r7: 'Não atingir a meta <strong>não cancela</strong> a garantia da semana seguinte',
+    h4_r8: 'Se metas não forem cumpridas → <strong>salário segue política básica</strong>',
+    h4_1_head: '4.1 Requisitos',
+    h4_req1: 'Ter aparência limpa e apresentável',
+    h4_req2: 'Seguir o horário e completar as horas',
+    h4_req3: 'Manter o fundo organizado',
+    h4_req4: 'Manter boa qualidade de áudio e vídeo',
+    h4_req5: 'Engajar ativamente com os espectadores',
+    h4_req6: 'Seguir instruções da equipe e participar das atividades',
+    h4_2_head: '4.2 Remoção da Política de Host Sensual',
+    h4_rem1: 'Não transmitir regularmente ou mostrar má atitude',
+    h4_rem2: 'Ignorar ou desrespeitar os espectadores',
+    h4_rem3: 'Configuração bagunçada sem melhoria',
+    h4_rem4: 'Não seguir instruções da equipe',
+    h4_rem5: 'Má qualidade de transmissão sem correção',
+    h4_rem6: 'Violar regras da plataforma ou leis',
+    a1_title: 'Comissões da Agência',
+    level: 'Nível', agency_weekly_rev: 'Receita Semanal da Agência (Rubi)', commission: 'Comissão',
+    below_10m: 'Abaixo de 10M', above_30m: 'Acima de 30M',
+    agency_req_head: 'Requisitos da Agência',
+    a1_req1: 'A agência deve ter pelo menos <strong>5 hosts ativos por semana</strong>',
+    a1_req2: 'A agência deve apoiar a plataforma: incentivar hosts a transmitir e participar de eventos',
+    weekly_task_period: 'Período de Tarefas Semanais',
+    period_label: '📅 Período', start: 'Início', end: 'Fim',
+    tasks_reset: 'Tarefas reiniciam toda semana no domingo às 12:00 PM EST',
+    a2_title: 'Política de Salário de Ativação de Host',
+    agency_level: 'Nível da Agência', monthly_target: 'Meta Mensal (Rubis)', active_hosts: 'Hosts Ativos', basic_pay: 'Pagamento Básico',
+    above_10m: 'Acima de 10M', above_50m: 'Acima de 50M', above_100m: 'Acima de 100M', above_200m: 'Acima de 200M',
+    a2_intro: 'Uma agência recebe um <strong>salário básico mensal</strong> se:',
+    a2_r1: 'Atingir a <strong>meta mensal de Rubis</strong>',
+    a2_r2: 'Mantiver o <strong>número exigido de hosts ativos</strong>',
+    def_active_host: 'Definição: Host Ativo',
+    active_host_intro: 'Um host é considerado ativo se:',
+    ah_r1: 'Completar pelo menos <strong>10 dias válidos</strong> no mês',
+    ah_r2: 'Completar pelo menos <strong>20 horas válidas</strong> no mês',
+    ah_r3: 'Ganhar <strong>100.000 Rubis ou mais</strong> em presentes no mês',
+    important_label: '⚠ Importante',
+    a2_strict: 'Não cumprir a Meta Mensal de Receita ou o Requisito de Hosts Ativos resultará em <span class="hl-red">desqualificação da Política de Salário de Ativação</span>.',
+    a3_title: 'Pagamento de Comissões',
+    payout_label: '💰 Pagamento',
+    a3_payout: 'As comissões são pagas <span class="hl-gold">toda segunda-feira em Rubis</span>.',
+    a4_title: 'Regras de Saque',
+    a4_r1: 'Solicitações de saque podem ser enviadas <strong>uma vez por dia</strong>',
+    a4_r2: 'Valor mínimo de saque: <span class="hl-green">$10 USD</span>',
+    withdrawal_fee_head: 'Estrutura de Taxas de Saque',
+    withdrawal_amount: 'Valor do Saque', fee_applied: 'Taxa Aplicada',
+    less_than_100: 'Menos de $100', fee_flat: 'Taxa fixa de $2 por transação',
+    '100_above': '$100 ou mais', fee_pct: '2% do valor do saque',
+    a5_title: 'Regras de Mudança de Agência',
+    a5_r1: 'Sem atividade por <strong>120 dias</strong>',
+    a5_r3: 'Tanto a Agência quanto o Host concordam',
+    a5_strict: 'Qualquer trapaça ou abuso → <span class="hl-red">Aviso / Suspensão / Ban</span>'
+  },
+
+  ru: {
+    tagline: 'Платформа прямых трансляций',
+    badge_home: '📋 Официальные документы',
+    policy_word: 'Политика',
+    label_policies: 'Политики',
+    host_policy_title: 'ПОЛИТИКА ХОСТА',
+    host_policy_sub: 'Правила и руководство для хостов',
+    agency_policy_title: 'ПОЛИТИКА АГЕНТСТВА',
+    agency_policy_sub: 'Условия и положения агентства',
+    label_contact: 'Контакты',
+    contact_title: 'СВЯЗАТЬСЯ С НАМИ',
+    contact_sub: 'Свяжитесь с Country Manager',
+    channel_title: 'ПРИСОЕДИНИТЬСЯ К КАНАЛУ',
+    channel_sub: 'Ежедневные обновления в WhatsApp',
+    all_rights: 'Все права защищены',
+    back: 'Назад',
+    badge_host: '🎙 Руководство для хостов',
+    host_word: 'Хост',
+    badge_agency: '🏢 Руководство для агентств',
+    agency_word: 'Агентство',
+    h1_title: 'Структура зарплаты хоста',
+    h1_1_head: '1.1 Доля личных подарков',
+    basic_share: 'Базовая доля',
+    host_share: 'Доля хоста',
+    example_label: '🔥 Пример',
+    h1_1_example: 'Если пользователь отправляет <span class="hl-gold">10K монет</span> во время прямой трансляции, хост получит <span class="hl-gold">10K рубинов</span>.',
+    h1_2_head: '1.2 Еженедельный бонус хоста',
+    valid_hours_target: 'Цель по действительным часам',
+    valid_days_target: 'Цель по действительным дням',
+    weekly_bonus: 'Еженедельный бонус',
+    h1_2_example: 'Если хост зарабатывает <span class="hl-gold">100K рубинов</span> за неделю <span class="hl-pink">(воскресенье 12:00 PM – воскресенье 12:00 PM по EST Нью-Йорк)</span>, он получает <span class="hl-gold">бонус 30K рубинов (30%)</span>, начисляемый в <span class="hl-purple">понедельник</span>.',
+    h1_2_to_get: 'Чтобы получить бонус, хост должен:',
+    h1_2_req1: 'Выполнить не менее <strong>4 активных дней</strong>',
+    h1_2_req2: 'Провести трансляции общей продолжительностью <strong>10 часов</strong> в неделю',
+    h1_3_head: '1.3 Правила',
+    rule_withdrawal_rate: '<strong>Курс вывода:</strong> <span class="hl-gold">20 000 рубинов = 1 USD</span>',
+    rule_day_change: '<strong>Смена дня:</strong> Ежедневно в <span class="hl-pink">12:00 PM (EST – Нью-Йорк)</span>',
+    rule_weekly_period: '<strong>Недельный период:</strong> <span class="hl-pink">Воскресенье 12:00 PM – воскресенье 12:00 PM (EST – Нью-Йорк)</span>',
+    rule_valid_day: '<strong>Действительный день:</strong> Минимум <span class="hl-gold">120 минут (2 часа)</span> в эфире',
+    rule_valid_hour: '<strong>Действительный час:</strong> 60+ минут = <span class="hl-gold">1 действительный час</span>',
+    rule_min_live: '<strong>Минимальное время трансляции:</strong> Сессии менее <strong>30 минут</strong> не учитываются',
+    rule_bonus_pay: '<strong>Выплата бонуса:</strong> Каждый <span class="hl-purple">понедельник (в рубинах)</span>',
+    rule_withdrawal: '<strong>Вывод:</strong> Один раз в день, минимум = <span class="hl-green">$10 USD</span>',
+    agency_change_head: 'Правила смены агентства',
+    agency_change_intro: 'Хост может сменить агентство если:',
+    ac_r1: 'Нет трансляций в течение <strong>120 дней</strong>',
+    ac_r2: 'Нет связи с агентством в течение <strong>2 недель</strong>',
+    ac_r3: 'И хост, и агентство согласны',
+    strict_rule: '⚠ Строгое правило',
+    ac_strict: 'Любое злоупотребление или мошенничество при переводе → <span class="hl-red">Предупреждение / Приостановка / Бан</span>',
+    h2_title: 'Игровые комиссии хоста',
+    bet_amount: 'Сумма ставки (монеты)',
+    reward_ruby: 'Награда (рубин)',
+    h2_r1: 'Хост зарабатывает <strong>1 рубин</strong> за каждые <strong>1 000 монет</strong>, использованных в играх',
+    h2_r2: 'Этот доход <strong>НЕ засчитывается</strong> в еженедельные цели',
+    h2_r3: 'Заработок <strong>начисляется мгновенно</strong> после окончания трансляции',
+    h3_title: 'Политика гарантии для новых хостов',
+    cycle: 'Цикл', weekly_ruby_task: 'Еженедельная задача (рубины)', valid_days: 'Действ. дни', valid_hours: 'Действ. часы', guarantee: 'Гарантия',
+    week1: 'Неделя 1', week2: 'Неделя 2', week3: 'Неделя 3', week4: 'Неделя 4', week5plus: 'Неделя 5+',
+    h3_r1: 'Новые хосты должны быть <strong>одобрены</strong> для получения гарантии в первые 4 недели',
+    h3_r2: '<strong>Неделя 1:</strong> Без задания – гарантия предоставляется',
+    h3_r3: '<strong>Неделя 2:</strong> 50 000 рубинов',
+    h3_r4: '<strong>Неделя 3:</strong> 100 000 рубинов',
+    h3_r5: '<strong>Неделя 4:</strong> 150 000 рубинов',
+    h3_r6: 'Невыполнение задания одной недели <strong>не отменяет</strong> гарантию следующей',
+    h3_r7: 'Если дни/часы не выполнены → <strong>зарплата по базовой политике</strong>',
+    h3_r8: 'С <strong>5-й недели</strong> применяется только <strong>базовая политика</strong>',
+    h4_title: 'Политика хостов категории Sensual',
+    h4_r1: 'Только <strong>одобренные хосты</strong> могут участвовать в программе',
+    h4_r2: '<strong>Неделя 1:</strong> Без задания – гарантия предоставляется',
+    h4_r3: '<strong>Неделя 2:</strong> 100 000 рубинов',
+    h4_r4: '<strong>Неделя 3:</strong> 150 000 рубинов',
+    h4_r5: '<strong>Неделя 4:</strong> 200 000 рубинов',
+    h4_r6: '<strong>Неделя 5+:</strong> 300 000 рубинов',
+    h4_r7: 'Невыполнение задания <strong>не отменяет</strong> гарантию следующей недели',
+    h4_r8: 'При невыполнении целей → <strong>зарплата по базовой политике</strong>',
+    h4_1_head: '4.1 Требования',
+    h4_req1: 'Опрятный и презентабельный вид',
+    h4_req2: 'Соблюдать расписание и выполнять часы',
+    h4_req3: 'Поддерживать чистоту фона',
+    h4_req4: 'Обеспечивать хорошее качество аудио и видео',
+    h4_req5: 'Активно взаимодействовать со зрителями',
+    h4_req6: 'Следовать инструкциям команды и участвовать в мероприятиях',
+    h4_2_head: '4.2 Исключение из политики хостов Sensual',
+    h4_rem1: 'Нерегулярные трансляции или плохое отношение',
+    h4_rem2: 'Игнорирование или неуважение к зрителям',
+    h4_rem3: 'Беспорядок на фоне без исправления',
+    h4_rem4: 'Несоблюдение инструкций команды',
+    h4_rem5: 'Плохое качество трансляции без улучшений',
+    h4_rem6: 'Нарушение правил платформы или законов',
+    a1_title: 'Комиссии агентства',
+    level: 'Уровень', agency_weekly_rev: 'Еженедельный доход агентства (рубины)', commission: 'Комиссия',
+    below_10m: 'Менее 10M', above_30m: 'Более 30M',
+    agency_req_head: 'Требования к агентству',
+    a1_req1: 'Агентство должно иметь не менее <strong>5 активных хостов каждую неделю</strong>',
+    a1_req2: 'Агентство должно поддерживать платформу: поощрять хостов и участие в мероприятиях',
+    weekly_task_period: 'Период еженедельных заданий',
+    period_label: '📅 Период', start: 'Начало', end: 'Конец',
+    tasks_reset: 'Задания сбрасываются каждое воскресенье в 12:00 PM EST',
+    a2_title: 'Политика зарплаты активации хостов',
+    agency_level: 'Уровень агентства', monthly_target: 'Месячная цель (рубины)', active_hosts: 'Активные хосты', basic_pay: 'Базовая оплата',
+    above_10m: 'Более 10M', above_50m: 'Более 50M', above_100m: 'Более 100M', above_200m: 'Более 200M',
+    a2_intro: 'Агентство получает <strong>ежемесячную базовую зарплату</strong> если:',
+    a2_r1: 'Выполняет <strong>ежемесячную цель по рубинам</strong>',
+    a2_r2: 'Поддерживает <strong>необходимое количество активных хостов</strong>',
+    def_active_host: 'Определение: Активный хост',
+    active_host_intro: 'Хост считается активным если:',
+    ah_r1: 'Выполняет не менее <strong>10 действительных дней</strong> в месяц',
+    ah_r2: 'Выполняет не менее <strong>20 действительных часов</strong> в месяц',
+    ah_r3: 'Зарабатывает <strong>100 000 рубинов или более</strong> в подарках за месяц',
+    important_label: '⚠ Важно',
+    a2_strict: 'Невыполнение целей по доходу или требований по активным хостам приведёт к <span class="hl-red">дисквалификации из политики зарплаты активации</span>.',
+    a3_title: 'Выплата комиссий',
+    payout_label: '💰 Выплата',
+    a3_payout: 'Комиссии выплачиваются <span class="hl-gold">каждый понедельник в рубинах</span>.',
+    a4_title: 'Правила вывода средств',
+    a4_r1: 'Заявки на вывод можно подавать <strong>один раз в день</strong>',
+    a4_r2: 'Минимальная сумма вывода: <span class="hl-green">$10 USD</span>',
+    withdrawal_fee_head: 'Структура комиссий за вывод',
+    withdrawal_amount: 'Сумма вывода', fee_applied: 'Применяемая комиссия',
+    less_than_100: 'Менее $100', fee_flat: 'Фиксированная комиссия $2 за транзакцию',
+    '100_above': '$100 и выше', fee_pct: '2% от суммы вывода',
+    a5_title: 'Правила смены агентства',
+    a5_r1: 'Нет активности в течение <strong>120 дней</strong>',
+    a5_r3: 'Агентство и хост согласны',
+    a5_strict: 'Любое мошенничество или злоупотребление → <span class="hl-red">Предупреждение / Приостановка / Бан</span>'
+  },
+
+  uk: {
+    tagline: 'Платформа прямих трансляцій',
+    badge_home: '📋 Офіційні документи',
+    policy_word: 'Політика',
+    label_policies: 'Політики',
+    host_policy_title: 'ПОЛІТИКА ХОСТА',
+    host_policy_sub: 'Правила та настанови для хостів',
+    agency_policy_title: 'ПОЛІТИКА АГЕНТСТВА',
+    agency_policy_sub: 'Умови та положення агентства',
+    label_contact: 'Контакти',
+    contact_title: "ЗВ'ЯЖІТЬСЯ З НАМИ",
+    contact_sub: 'Зв\'яжіться з Country Manager',
+    channel_title: 'ПРИЄДНАТИСЯ ДО КАНАЛУ',
+    channel_sub: 'Щоденні оновлення у WhatsApp',
+    all_rights: 'Усі права захищені',
+    back: 'Назад',
+    badge_host: '🎙 Настанови для хостів',
+    host_word: 'Хост',
+    badge_agency: '🏢 Настанови для агентств',
+    agency_word: 'Агентство',
+    h1_title: 'Структура зарплати хоста',
+    h1_1_head: '1.1 Частка особистих подарунків',
+    basic_share: 'Базова частка',
+    host_share: 'Частка хоста',
+    example_label: '🔥 Приклад',
+    h1_1_example: 'Якщо користувач надсилає <span class="hl-gold">10K монет</span> під час прямої трансляції, хост отримає <span class="hl-gold">10K рубінів</span>.',
+    h1_2_head: '1.2 Щотижневий бонус хоста',
+    valid_hours_target: 'Ціль за дійсними годинами',
+    valid_days_target: 'Ціль за дійсними днями',
+    weekly_bonus: 'Щотижневий бонус',
+    h1_2_example: 'Якщо хост заробляє <span class="hl-gold">100K рубінів</span> за тиждень <span class="hl-pink">(неділя 12:00 PM – неділя 12:00 PM за EST Нью-Йорк)</span>, він отримує <span class="hl-gold">бонус 30K рубінів (30%)</span>, нарахований у <span class="hl-purple">понеділок</span>.',
+    h1_2_to_get: 'Щоб отримати бонус, хост повинен:',
+    h1_2_req1: 'Виконати щонайменше <strong>4 активні дні</strong>',
+    h1_2_req2: 'Провести трансляції загальною тривалістю <strong>10 годин</strong> на тиждень',
+    h1_3_head: '1.3 Правила',
+    rule_withdrawal_rate: '<strong>Курс виведення:</strong> <span class="hl-gold">20 000 рубінів = 1 USD</span>',
+    rule_day_change: '<strong>Зміна дня:</strong> Щодня о <span class="hl-pink">12:00 PM (EST – Нью-Йорк)</span>',
+    rule_weekly_period: '<strong>Тижневий період:</strong> <span class="hl-pink">Неділя 12:00 PM – неділя 12:00 PM (EST – Нью-Йорк)</span>',
+    rule_valid_day: '<strong>Дійсний день:</strong> Мінімум <span class="hl-gold">120 хвилин (2 години)</span> в ефірі',
+    rule_valid_hour: '<strong>Дійсна година:</strong> 60+ хвилин = <span class="hl-gold">1 дійсна година</span>',
+    rule_min_live: '<strong>Мінімальний час трансляції:</strong> Сесії менше <strong>30 хвилин</strong> не зараховуються',
+    rule_bonus_pay: '<strong>Виплата бонусу:</strong> Кожен <span class="hl-purple">понеділок (у рубінах)</span>',
+    rule_withdrawal: '<strong>Виведення:</strong> Раз на день, мінімум = <span class="hl-green">$10 USD</span>',
+    agency_change_head: 'Правила зміни агентства',
+    agency_change_intro: 'Хост може змінити агентство якщо:',
+    ac_r1: 'Немає трансляцій протягом <strong>120 днів</strong>',
+    ac_r2: 'Немає зв\'язку з агентством протягом <strong>2 тижнів</strong>',
+    ac_r3: 'І хост, і агентство погоджуються',
+    strict_rule: '⚠ Суворе правило',
+    ac_strict: 'Будь-яке зловживання або шахрайство при переведенні → <span class="hl-red">Попередження / Призупинення / Бан</span>',
+    h2_title: 'Ігрові комісії хоста',
+    bet_amount: 'Сума ставки (монети)',
+    reward_ruby: 'Нагорода (рубін)',
+    h2_r1: 'Хост заробляє <strong>1 рубін</strong> за кожні <strong>1 000 монет</strong>, використаних в іграх',
+    h2_r2: 'Цей дохід <strong>НЕ зараховується</strong> до щотижневих цілей',
+    h2_r3: 'Заробіток <strong>нараховується миттєво</strong> після завершення трансляції',
+    h3_title: 'Політика гарантії для нових хостів',
+    cycle: 'Цикл', weekly_ruby_task: 'Щотижневе завдання (рубіни)', valid_days: 'Дійсні дні', valid_hours: 'Дійсні години', guarantee: 'Гарантія',
+    week1: 'Тиждень 1', week2: 'Тиждень 2', week3: 'Тиждень 3', week4: 'Тиждень 4', week5plus: 'Тиждень 5+',
+    h3_r1: 'Нові хости мають бути <strong>затверджені</strong> для отримання гарантії перші 4 тижні',
+    h3_r2: '<strong>Тиждень 1:</strong> Без завдання – гарантія надається',
+    h3_r3: '<strong>Тиждень 2:</strong> 50 000 рубінів',
+    h3_r4: '<strong>Тиждень 3:</strong> 100 000 рубінів',
+    h3_r5: '<strong>Тиждень 4:</strong> 150 000 рубінів',
+    h3_r6: 'Невиконання завдання одного тижня <strong>не скасовує</strong> гарантію наступного',
+    h3_r7: 'Якщо дні/години не виконані → <strong>зарплата за базовою політикою</strong>',
+    h3_r8: 'З <strong>5-го тижня</strong> застосовується лише <strong>базова політика</strong>',
+    h4_title: 'Політика хостів категорії Sensual',
+    h4_r1: 'Лише <strong>затверджені хости</strong> можуть брати участь у програмі',
+    h4_r2: '<strong>Тиждень 1:</strong> Без завдання – гарантія надається',
+    h4_r3: '<strong>Тиждень 2:</strong> 100 000 рубінів',
+    h4_r4: '<strong>Тиждень 3:</strong> 150 000 рубінів',
+    h4_r5: '<strong>Тиждень 4:</strong> 200 000 рубінів',
+    h4_r6: '<strong>Тиждень 5+:</strong> 300 000 рубінів',
+    h4_r7: 'Невиконання завдання <strong>не скасовує</strong> гарантію наступного тижня',
+    h4_r8: 'При невиконанні цілей → <strong>зарплата за базовою політикою</strong>',
+    h4_1_head: '4.1 Вимоги',
+    h4_req1: 'Охайний та презентабельний вигляд',
+    h4_req2: 'Дотримуватися розкладу та виконувати години',
+    h4_req3: 'Підтримувати чистоту фону',
+    h4_req4: 'Забезпечувати хорошу якість аудіо та відео',
+    h4_req5: 'Активно взаємодіяти з глядачами',
+    h4_req6: 'Дотримуватися інструкцій команди та брати участь у заходах',
+    h4_2_head: '4.2 Виключення з політики хостів Sensual',
+    h4_rem1: 'Нерегулярні трансляції або погане ставлення',
+    h4_rem2: 'Ігнорування або неповага до глядачів',
+    h4_rem3: 'Безладний фон без виправлень',
+    h4_rem4: 'Недотримання інструкцій команди',
+    h4_rem5: 'Погана якість трансляції без покращень',
+    h4_rem6: 'Порушення правил платформи або законів',
+    a1_title: 'Комісії агентства',
+    level: 'Рівень', agency_weekly_rev: 'Щотижневий дохід агентства (рубіни)', commission: 'Комісія',
+    below_10m: 'Менше 10M', above_30m: 'Більше 30M',
+    agency_req_head: 'Вимоги до агентства',
+    a1_req1: 'Агентство повинно мати щонайменше <strong>5 активних хостів щотижня</strong>',
+    a1_req2: 'Агентство повинно підтримувати платформу: заохочувати хостів та участь у заходах',
+    weekly_task_period: 'Період щотижневих завдань',
+    period_label: '📅 Період', start: 'Початок', end: 'Кінець',
+    tasks_reset: 'Завдання скидаються щонеділі о 12:00 PM EST',
+    a2_title: 'Політика зарплати активації хостів',
+    agency_level: 'Рівень агентства', monthly_target: 'Місячна ціль (рубіни)', active_hosts: 'Активні хости', basic_pay: 'Базова оплата',
+    above_10m: 'Більше 10M', above_50m: 'Більше 50M', above_100m: 'Більше 100M', above_200m: 'Більше 200M',
+    a2_intro: 'Агентство отримує <strong>щомісячну базову зарплату</strong> якщо:',
+    a2_r1: 'Виконує <strong>щомісячну ціль по рубінах</strong>',
+    a2_r2: 'Підтримує <strong>необхідну кількість активних хостів</strong>',
+    def_active_host: 'Визначення: Активний хост',
+    active_host_intro: 'Хост вважається активним якщо:',
+    ah_r1: 'Виконує щонайменше <strong>10 дійсних днів</strong> на місяць',
+    ah_r2: 'Виконує щонайменше <strong>20 дійсних годин</strong> на місяць',
+    ah_r3: 'Заробляє <strong>100 000 рубінів або більше</strong> у подарунках за місяць',
+    important_label: '⚠ Важливо',
+    a2_strict: 'Невиконання цілей по доходу або вимог до активних хостів призведе до <span class="hl-red">дискваліфікації з політики зарплати активації</span>.',
+    a3_title: 'Виплата комісій',
+    payout_label: '💰 Виплата',
+    a3_payout: 'Комісії виплачуються <span class="hl-gold">кожного понеділка в рубінах</span>.',
+    a4_title: 'Правила виведення коштів',
+    a4_r1: 'Заявки на виведення можна подавати <strong>раз на день</strong>',
+    a4_r2: 'Мінімальна сума виведення: <span class="hl-green">$10 USD</span>',
+    withdrawal_fee_head: 'Структура комісій за виведення',
+    withdrawal_amount: 'Сума виведення', fee_applied: 'Застосована комісія',
+    less_than_100: 'Менше $100', fee_flat: 'Фіксована комісія $2 за транзакцію',
+    '100_above': '$100 і вище', fee_pct: '2% від суми виведення',
+    a5_title: 'Правила зміни агентства',
+    a5_r1: 'Немає активності протягом <strong>120 днів</strong>',
+    a5_r3: 'Агентство та хост погоджуються',
+    a5_strict: 'Будь-яке шахрайство або зловживання → <span class="hl-red">Попередження / Призупинення / Бан</span>'
+  }
+};
+
+var currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  var meta = langMeta[lang];
+  var t = translations[lang];
+
+  // Update button
+  document.getElementById('currentFlag').textContent = meta.flag;
+  document.getElementById('currentLangLabel').textContent = meta.label;
+
+  // Update dropdown active state
+  document.querySelectorAll('.lang-option').forEach(function(opt) {
+    opt.classList.remove('active');
+  });
+  var opts = document.querySelectorAll('.lang-option');
+  var langKeys = ['en','es','pt','ru','uk'];
+  opts[langKeys.indexOf(lang)].classList.add('active');
+
+  // Close dropdown
+  document.getElementById('langToggle').classList.remove('open');
+  document.getElementById('langDropdown').classList.remove('open');
+
+  // Apply translations
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      el.innerHTML = t[key];
+    }
+  });
+}
 </script>
 </body>
 </html>
