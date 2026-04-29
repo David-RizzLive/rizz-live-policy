@@ -312,10 +312,7 @@
 
     .section-label { font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#6b5b8a;margin-bottom:10px;padding-left:2px; }
     .group { margin-bottom:22px; }
-    .group:nth-child(1){animation:fadeUp 0.4s 0.12s ease both}
-    .group:nth-child(2){animation:fadeUp 0.4s 0.2s ease both}
-    .group:nth-child(3){animation:fadeUp 0.4s 0.28s ease both}
-    .group:nth-child(4){animation:fadeUp 0.4s 0.36s ease both}
+    /* group fadeUp handled by JS */
 
     .nav-btn {
       display:flex;align-items:center;gap:14px;width:100%;
@@ -457,11 +454,7 @@
       box-shadow:0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.1) inset;
       transition:box-shadow 0.3s ease,border-color 0.3s ease;
     }
-    .acc:nth-child(1){animation:fadeUp 0.4s 0.14s ease both}
-    .acc:nth-child(2){animation:fadeUp 0.4s 0.21s ease both}
-    .acc:nth-child(3){animation:fadeUp 0.4s 0.28s ease both}
-    .acc:nth-child(4){animation:fadeUp 0.4s 0.35s ease both}
-    .acc:nth-child(5){animation:fadeUp 0.4s 0.42s ease both}
+    /* acc fadeUp handled by JS */
 
     .acc-header { display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;transition:background 0.2s;user-select:none;touch-action:manipulation; }
     .acc-header:active { background:rgba(168,85,247,0.08); }
@@ -697,12 +690,12 @@
       66%      { transform:translateY(-28px) translateX(6px) scale(0.8); opacity:0.4; }
     }
 
-    /* Section label — visible by default; JS adds animation class on page entry */
+    /* Section label — fade-slide in */
     .section-label { opacity:1; }
-    .section-label.anim-in { animation:labelSlideIn 0.5s ease forwards; }
+    .section-label.do-anim { animation:labelSlideIn 0.4s ease forwards; }
     @keyframes labelSlideIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:none} }
 
-    /* Nav button — stagger entrance (handled by JS to avoid re-trigger blink) */
+    /* Nav button stagger handled by JS */
 
     /* Title accent glow pulse */
     @keyframes accentGlow {
@@ -712,7 +705,7 @@
     .page-title .accent { animation:shimmer 3s linear infinite, accentGlow 2.8s ease-in-out infinite; }
 
     /* Title line grow-in */
-    .title-line { width:0;animation:lineGrow 0.6s 0.4s ease forwards; }
+    .title-line { width:40px; }
     @keyframes lineGrow { to { width:40px; } }
 
     /* Hiring section pulse border */
@@ -722,8 +715,7 @@
     }
     .hiring-section { animation:hiringBorder 3s ease-in-out infinite; }
 
-    /* Back button slide in */
-    .back-btn { animation:slideInLeft 0.4s ease both; }
+    /* Back button - no blink animation */
     @keyframes slideInLeft { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:none} }
 
     /* Acc num — pop on open */
@@ -891,7 +883,7 @@
     </button>
   </div>
 
-  <div class="section-head" style="animation:fadeUp 0.4s 0.06s ease both;">
+  <div class="section-head">
     <div class="badge" data-i18n="badge_home">📋 Official Documents</div>
     <div class="page-title">Rizz Live <span class="accent" data-i18n="policy_word">Policy</span></div>
     <div class="title-line"></div>
@@ -1418,41 +1410,46 @@
 <script>
 // ── Page navigation ──────────────────────────────
 function showPage(id) {
-  // Page wipe shimmer
-  var oldWipe = document.querySelector('.page-wipe');
-  if (oldWipe && oldWipe.parentNode) oldWipe.parentNode.removeChild(oldWipe);
+  // Remove stale wipe divs
+  document.querySelectorAll('.page-wipe').forEach(function(w){ if(w.parentNode) w.parentNode.removeChild(w); });
+  // Wipe shimmer
   var wipe = document.createElement('div');
   wipe.className = 'page-wipe';
   document.body.appendChild(wipe);
   setTimeout(function(){ if(wipe.parentNode) wipe.parentNode.removeChild(wipe); }, 600);
 
+  // Hide all pages
   document.querySelectorAll('.page').forEach(function(p){
     p.classList.remove('active','page-enter');
   });
+
   var t = document.getElementById(id);
   if (!t) return;
   t.classList.add('active');
-  // Force reflow so animation restarts cleanly
+  // Force reflow then add enter animation
   void t.offsetWidth;
   t.classList.add('page-enter');
   window.scrollTo({top:0,behavior:'smooth'});
 
-  // Stagger nav buttons on home page
-  if (id === 'page-home') {
-    var delays = [0.15,0.25,0.35,0.42,0.49];
-    var navBtns = t.querySelectorAll('.nav-btn');
-    navBtns.forEach(function(btn, i){
-      btn.style.animation = 'none';
-      void btn.offsetWidth;
-      btn.style.animation = 'fadeUp 0.45s '+(delays[i]||0.15)+'s ease both';
-    });
-  }
+  // Animate groups/navbtns with stagger
+  t.querySelectorAll('.group').forEach(function(g, gi){
+    g.style.animation = 'none';
+    void g.offsetWidth;
+    g.style.animation = 'fadeUp 0.4s ' + (0.12 + gi*0.08) + 's ease both';
+  });
+
+  // Animate accordions with stagger
+  t.querySelectorAll('.acc').forEach(function(a, ai){
+    a.style.animation = 'none';
+    void a.offsetWidth;
+    a.style.animation = 'fadeUp 0.4s ' + (0.14 + ai*0.07) + 's ease both';
+  });
 
   // Animate section labels
   t.querySelectorAll('.section-label').forEach(function(el){
-    el.classList.remove('anim-in');
+    el.classList.remove('do-anim');
     void el.offsetWidth;
-    el.classList.add('anim-in');
+    el.classList.add('do-anim');
   });
 }
 
@@ -2449,16 +2446,18 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('themeIcon').textContent = '🌙';
   document.getElementById('themeLabel').textContent = 'Dark';
   currentTheme = 'light';
-  // Trigger initial stagger for home page nav buttons
-  var delays = [0.15,0.25,0.35,0.42,0.49];
-  var navBtns = document.querySelectorAll('#page-home .nav-btn');
-  navBtns.forEach(function(btn, i){
-    btn.style.animation = 'fadeUp 0.45s '+(delays[i]||0.15)+'s ease both';
-  });
-  // Animate section labels on home page
-  document.querySelectorAll('#page-home .section-label').forEach(function(el){
-    el.classList.add('anim-in');
-  });
+  // Trigger entrance animations for initial home page
+  var homePage = document.getElementById('page-home');
+  if (homePage) {
+    void homePage.offsetWidth;
+    homePage.classList.add('page-enter');
+    homePage.querySelectorAll('.group').forEach(function(g, gi){
+      g.style.animation = 'fadeUp 0.4s ' + (0.12 + gi*0.08) + 's ease both';
+    });
+    homePage.querySelectorAll('.section-label').forEach(function(el){
+      el.classList.add('do-anim');
+    });
+  }
 });
 
 var currentLang = 'en';
@@ -2479,14 +2478,9 @@ function setLang(lang) {
     var key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
-  // Recalculate open accordion heights after content change
-  document.querySelectorAll('.acc.open').forEach(function(acc){
-    var body = acc.querySelector('.acc-body');
-    if (body) body.style.maxHeight = body.scrollHeight + 600 + 'px';
-  });
 }
 
-// ── Page wipe is now integrated into showPage above ──
+// Page wipe is now inside showPage()
 
 // ── Nav button ripple on tap ──────────────────────
 document.addEventListener('pointerdown', function(e) {
