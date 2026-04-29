@@ -220,7 +220,6 @@
 
     .page { display:none;position:relative;z-index:1;padding:24px 16px 56px;max-width:480px;margin:0 auto;min-height:100vh; }
     .page.active { display:block; }
-    .page.page-enter { animation:fadeUp 0.4s ease both; }
 
     /* ── LANGUAGE SWITCHER ── */
     .lang-bar { display:flex;justify-content:center;margin-bottom:14px;position:relative;z-index:99; }
@@ -312,7 +311,7 @@
 
     .section-label { font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#6b5b8a;margin-bottom:10px;padding-left:2px; }
     .group { margin-bottom:22px; }
-    /* group fadeUp handled by JS */
+    /* group entrance animations removed - caused blink on re-visit */
 
     .nav-btn {
       display:flex;align-items:center;gap:14px;width:100%;
@@ -454,7 +453,7 @@
       box-shadow:0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.1) inset;
       transition:box-shadow 0.3s ease,border-color 0.3s ease;
     }
-    /* acc fadeUp handled by JS */
+    /* acc entrance animations removed - caused blink on re-visit */
 
     .acc-header { display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;transition:background 0.2s;user-select:none;touch-action:manipulation; }
     .acc-header:active { background:rgba(168,85,247,0.08); }
@@ -692,10 +691,10 @@
 
     /* Section label — fade-slide in */
     .section-label { opacity:1; }
-    .section-label.do-anim { animation:labelSlideIn 0.4s ease forwards; }
     @keyframes labelSlideIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:none} }
 
-    /* Nav button stagger handled by JS */
+    /* Nav button — stagger entrance */
+    /* nav-btn stagger animations removed - caused blink on re-visit */
 
     /* Title accent glow pulse */
     @keyframes accentGlow {
@@ -704,9 +703,7 @@
     }
     .page-title .accent { animation:shimmer 3s linear infinite, accentGlow 2.8s ease-in-out infinite; }
 
-    /* Title line grow-in */
-    .title-line { width:40px; }
-    @keyframes lineGrow { to { width:40px; } }
+    /* title-line animation removed - caused reflow flash */
 
     /* Hiring section pulse border */
     @keyframes hiringBorder {
@@ -715,8 +712,7 @@
     }
     .hiring-section { animation:hiringBorder 3s ease-in-out infinite; }
 
-    /* Back button - no blink animation */
-    @keyframes slideInLeft { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:none} }
+    /* back-btn entrance animation removed - caused blink */
 
     /* Acc num — pop on open */
     .acc.open .acc-num { animation:numPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
@@ -1410,47 +1406,18 @@
 <script>
 // ── Page navigation ──────────────────────────────
 function showPage(id) {
-  // Remove stale wipe divs
-  document.querySelectorAll('.page-wipe').forEach(function(w){ if(w.parentNode) w.parentNode.removeChild(w); });
-  // Wipe shimmer
+  // Clean up any existing wipe
+  var oldWipe = document.querySelector('.page-wipe');
+  if (oldWipe) oldWipe.parentNode.removeChild(oldWipe);
+  // Add fresh wipe
   var wipe = document.createElement('div');
   wipe.className = 'page-wipe';
   document.body.appendChild(wipe);
   setTimeout(function(){ if(wipe.parentNode) wipe.parentNode.removeChild(wipe); }, 600);
-
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(function(p){
-    p.classList.remove('active','page-enter');
-  });
-
+  // Switch page
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   var t = document.getElementById(id);
-  if (!t) return;
-  t.classList.add('active');
-  // Force reflow then add enter animation
-  void t.offsetWidth;
-  t.classList.add('page-enter');
-  window.scrollTo({top:0,behavior:'smooth'});
-
-  // Animate groups/navbtns with stagger
-  t.querySelectorAll('.group').forEach(function(g, gi){
-    g.style.animation = 'none';
-    void g.offsetWidth;
-    g.style.animation = 'fadeUp 0.4s ' + (0.12 + gi*0.08) + 's ease both';
-  });
-
-  // Animate accordions with stagger
-  t.querySelectorAll('.acc').forEach(function(a, ai){
-    a.style.animation = 'none';
-    void a.offsetWidth;
-    a.style.animation = 'fadeUp 0.4s ' + (0.14 + ai*0.07) + 's ease both';
-  });
-
-  // Animate section labels
-  t.querySelectorAll('.section-label').forEach(function(el){
-    el.classList.remove('do-anim');
-    void el.offsetWidth;
-    el.classList.add('do-anim');
-  });
+  if (t) { t.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
 }
 
 function openLink(url) {
@@ -2446,18 +2413,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('themeIcon').textContent = '🌙';
   document.getElementById('themeLabel').textContent = 'Dark';
   currentTheme = 'light';
-  // Trigger entrance animations for initial home page
-  var homePage = document.getElementById('page-home');
-  if (homePage) {
-    void homePage.offsetWidth;
-    homePage.classList.add('page-enter');
-    homePage.querySelectorAll('.group').forEach(function(g, gi){
-      g.style.animation = 'fadeUp 0.4s ' + (0.12 + gi*0.08) + 's ease both';
-    });
-    homePage.querySelectorAll('.section-label').forEach(function(el){
-      el.classList.add('do-anim');
-    });
-  }
 });
 
 var currentLang = 'en';
@@ -2480,7 +2435,7 @@ function setLang(lang) {
   });
 }
 
-// Page wipe is now inside showPage()
+// page-wipe now handled inline in showPage below
 
 // ── Nav button ripple on tap ──────────────────────
 document.addEventListener('pointerdown', function(e) {
