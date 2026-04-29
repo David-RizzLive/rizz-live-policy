@@ -2523,3 +2523,67 @@ document.addEventListener('pointerdown', function(e) {
 </script>
 </body>
 </html>
+/* ════════════════════════════════════════
+   PERFORMANCE PATCH — 50% ANIMATION CUT
+   (non-destructive override)
+════════════════════════════════════════ */
+
+/* 1. Kill heavy continuous animations */
+.header-card,
+.badge,
+.hiring-section,
+.page-title .accent {
+  animation: none !important;
+}
+
+/* 2. Disable extra background effects (keep only blobs) */
+.aurora,
+.aurora-2,
+.nebula {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* 3. Reduce blob load (keep only 2 running) */
+.blob-3,
+.blob-4,
+.blob-5 {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* 4. Reduce floating orbs (keep 2 only) */
+.orb-3,
+.orb-4,
+.orb-5 {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* 5. Stop border + glow repaints */
+.acc.open,
+.nav-btn:hover,
+.nav-btn:active {
+  box-shadow: none !important;
+}
+
+/* 6. Remove shimmer loops (expensive) */
+.page-title .accent,
+.badge,
+.title-line {
+  animation: none !important;
+  background-size: auto !important;
+}
+
+/* 7. Keep only transform-based animations smooth */
+.blob,
+.orb {
+  will-change: transform, opacity;
+}
+
+/* 8. Optional safety: reduce motion on smaller devices */
+@media (max-width: 768px) {
+  .blob-2 {
+    animation: none !important;
+  }
+}
