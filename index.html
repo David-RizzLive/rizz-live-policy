@@ -7,7 +7,7 @@
 <title>Rizz Live – Policy Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{height:100%;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
@@ -52,6 +52,44 @@ html{height:100%;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 @keyframes logoGlow{0%,100%{filter:drop-shadow(0 0 12px rgba(232,194,120,.2))}50%{filter:drop-shadow(0 0 22px rgba(232,194,120,.5))}}
 @keyframes pageIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes countryPulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+/* ── RTL SUPPORT ── */
+html[dir="rtl"] body { font-family: 'Cairo', sans-serif; }
+html[dir="rtl"] .page { direction: rtl; }
+html[dir="rtl"] .topbar { flex-direction: row-reverse; }
+html[dir="rtl"] .hrow { flex-direction: row-reverse; }
+html[dir="rtl"] .brand-block { text-align: right; }
+html[dir="rtl"] .nc { flex-direction: row-reverse; }
+html[dir="rtl"] .ct { text-align: right; }
+html[dir="rtl"] .arrbtn svg { transform: scaleX(-1); }
+html[dir="rtl"] .nc:hover .arrbtn svg { transform: scaleX(-1) translateX(-2px); }
+html[dir="rtl"] .backbtn { flex-direction: row-reverse; }
+html[dir="rtl"] .backbtn:hover { transform: translateX(4px); }
+html[dir="rtl"] .backbtn svg { transform: scaleX(-1); }
+html[dir="rtl"] .slabel { flex-direction: row-reverse; }
+html[dir="rtl"] .slabel::before { background: linear-gradient(270deg,var(--gold),transparent); }
+html[dir="rtl"] .slabel::after { background: linear-gradient(270deg,var(--border2),transparent); }
+html[dir="rtl"] .subh { border-left: none; border-right: 2px solid var(--gold); padding-left: 0; padding-right: 10px; }
+html[dir="rtl"] .bl li { flex-direction: row-reverse; text-align: right; }
+html[dir="rtl"] .ah { flex-direction: row-reverse; }
+html[dir="rtl"] .acc::before { left: auto; right: 10%; }
+html[dir="rtl"] .ticker-inner { animation-direction: reverse; }
+html[dir="rtl"] .eyebrow { flex-direction: row-reverse; }
+html[dir="rtl"] .pey { flex-direction: row-reverse; }
+html[dir="rtl"] .iw { flex-shrink: 0; }
+html[dir="rtl"] .tbl th, html[dir="rtl"] .tbl td { text-align: right; }
+html[dir="rtl"] .prose { text-align: right; }
+html[dir="rtl"] .lopt { flex-direction: row-reverse; }
+html[dir="rtl"] .lopt .ck { margin-left: 0; margin-right: auto; }
+html[dir="rtl"] .ldrop { left: auto; right: 0; }
+html[dir="rtl"] .timr { flex-direction: row-reverse; }
+html[dir="rtl"] .live-tag { flex-direction: row-reverse; }
+html[dir="rtl"] .ncbadge { right: auto; left: 10px; }
+html[dir="rtl"] .country-check { right: auto; left: 8px; }
+html[dir="rtl"] .xb-p .xlbl,html[dir="rtl"] .xb-y .xlbl,html[dir="rtl"] .xb-r .xlbl,html[dir="rtl"] .xb-g .xlbl,html[dir="rtl"] .xb-s .xlbl { text-align: right; }
+html[dir="rtl"] .xbox p { text-align: right; }
+html[dir="rtl"] .hcard::after { background: radial-gradient(ellipse 60% 40% at 50% 0%,var(--gold-dim),transparent); }
+
 body{background:var(--bg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;color:var(--t0);transition:var(--transition-theme)}
 body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:0;mix-blend-mode:soft-light;opacity:var(--noise-op);transition:opacity .4s}
 #scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:var(--transition-theme)}
@@ -226,6 +264,29 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
 .auth-cards-wrapper{transition:opacity .35s ease}
 .auth-cards-hidden{opacity:0;pointer-events:none;height:0;overflow:hidden;margin:0;padding:0}
 
+/* ── ARABIC FONT OVERRIDES ── */
+html[dir="rtl"] .htitle,
+html[dir="rtl"] .ptitle,
+html[dir="rtl"] .bn,
+html[dir="rtl"] .cth,
+html[dir="rtl"] .atxt,
+html[dir="rtl"] .backbtn,
+html[dir="rtl"] .cts,
+html[dir="rtl"] .hsub,
+html[dir="rtl"] .prose,
+html[dir="rtl"] .bl li,
+html[dir="rtl"] .xbox p,
+html[dir="rtl"] .country-name {
+  font-family: 'Cairo', sans-serif;
+}
+html[dir="rtl"] .htitle { letter-spacing: 0; font-size: 30px; }
+html[dir="rtl"] .ptitle { letter-spacing: 0; }
+html[dir="rtl"] .eyebrow { letter-spacing: .1em; }
+html[dir="rtl"] .pey { letter-spacing: .1em; }
+html[dir="rtl"] .hero { direction: rtl; }
+html[dir="rtl"] .hsub { direction: rtl; }
+html[dir="rtl"] .sep { background: linear-gradient(270deg,var(--gold-line),rgba(232,194,120,.06),transparent); }
+
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:100px}
 </style>
 </head>
@@ -243,13 +304,15 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
 <div class="page active" id="pg-home">
   <div class="topbar">
     <div style="position:relative;display:flex;align-items:center;gap:8px">
-      <span style="font-size:11px;font-weight:700;color:var(--t2);font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;white-space:nowrap">Choose Language</span>
+      <span style="font-size:11px;font-weight:700;color:var(--t2);font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;white-space:nowrap" id="choose-lang-lbl">Choose Language</span>
       <button class="pill" id="lb" onclick="tLang(event)">
         <span id="lf">🇺🇸</span><span id="ltn">EN</span>
         <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 4 6 8 10 4"/></svg>
       </button>
       <div class="ldrop" id="ldd">
         <div class="lopt on" onclick="sL('en','🇺🇸','EN',this)"><span>🇺🇸</span><span>English</span><span class="ck">✓</span></div>
+        <div class="ldiv"></div>
+        <div class="lopt" onclick="sL('ar','🇸🇦','AR',this)"><span>🇸🇦</span><span>العربية</span><span class="ck">✓</span></div>
         <div class="ldiv"></div>
         <div class="lopt" onclick="sL('es','🇪🇸','ES',this)"><span>🇪🇸</span><span>Español</span><span class="ck">✓</span></div>
         <div class="lopt" onclick="sL('pt','🇧🇷','PT',this)"><span>🇧🇷</span><span>Português (BR)</span><span class="ck">✓</span></div>
@@ -268,7 +331,7 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
       </div>
       <div class="brand-block">
         <div class="bn">RIZZ LIVE</div>
-        <div class="bs">Live Streaming Platform</div>
+        <div class="bs" id="platform-sub">Live Streaming Platform</div>
       </div>
       <div class="live-tag"><div class="ldot"></div><span class="live-lbl">LIVE</span></div>
     </div>
@@ -286,7 +349,7 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
   <div class="sbox">
     <div class="slabel" id="nav-policies-lbl">Policies</div>
     <div class="nc feat" onclick="go('pg-host')">
-      <div class="ncbadge">Updated</div>
+      <div class="ncbadge" id="updated-badge">Updated</div>
       <div class="iw" style="background:linear-gradient(145deg,rgba(232,194,120,.15),rgba(160,112,0,.07))">🎙️</div>
       <div class="ct"><div class="cth" id="nav-host-title">Host Policy</div><div class="cts" id="nav-host-sub">Rules &amp; guidelines for hosts</div></div>
       <div class="arrbtn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 4 10 8 6 12"/></svg></div>
@@ -595,7 +658,6 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
       <p style="font-size:11px;color:var(--t3);font-family:'IBM Plex Mono',monospace;margin-bottom:14px;padding-left:24px" id="cs-sublabel">Select your country to see the relevant sections</p>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <!-- USA Button -->
         <button class="country-btn" id="btn-usa" onclick="setCountry('usa')">
           <span class="country-check country-check-usa">
             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg>
@@ -609,7 +671,6 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
           </div>
         </button>
 
-        <!-- Other Country Button -->
         <button class="country-btn" id="btn-other" onclick="setCountry('other')">
           <span class="country-check country-check-other">
             <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg>
@@ -626,12 +687,10 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
       <div id="cs-note" style="display:none;margin-top:12px;border-radius:9px;padding:10px 13px;font-size:11px;color:var(--t1);line-height:1.6;transition:background .3s,border-color .3s"></div>
     </div>
   </div>
-  <!-- ═══ END COUNTRY SELECTOR ═══ -->
 
-  <!-- ═══ AUTH CARDS — hidden until country selected ═══ -->
+  <!-- ═══ AUTH CARDS ═══ -->
   <div id="auth-cards-container" style="display:none">
 
-    <!-- CARD 1: Always shown after any selection -->
     <div class="acc open" id="wa1">
       <div class="ah" onclick="tog('wa1')">
         <div class="anum">01</div><div class="atxt" id="au-a1">Host Agency Joining Process</div>
@@ -647,7 +706,6 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
       </div>
     </div>
 
-    <!-- CARD 2: USA only — Authentication & Bank Withdrawal -->
     <div class="acc" id="wa2" style="display:none">
       <div class="ah" onclick="tog('wa2')">
         <div class="anum">02</div><div class="atxt" id="au-a2">Authentication &amp; Bank Withdrawal</div>
@@ -691,7 +749,6 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
       </div>
     </div>
 
-    <!-- CARD 3: All countries (shown for Other; also shown for USA) — Authentication & USDT Withdrawal -->
     <div class="acc" id="wa3" style="display:none">
       <div class="ah" onclick="tog('wa3')">
         <div class="anum" id="wa3-num">03</div><div class="atxt" id="au-a3">Authentication &amp; USDT Withdrawal</div>
@@ -739,7 +796,6 @@ body::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;backgrou
       </div>
     </div>
 
-    <!-- CARD 4: Always shown after any selection — How to Apply for Withdrawal -->
     <div class="acc" id="wa4" style="display:none">
       <div class="ah" onclick="tog('wa4')">
         <div class="anum" id="wa4-num">04</div><div class="atxt" id="au-a4">How to Apply for Withdrawal</div>
@@ -844,15 +900,9 @@ function setCountry(c){
   var btnOther=document.getElementById('btn-other');
   var note=document.getElementById('cs-note');
   var container=document.getElementById('auth-cards-container');
-
-  /* Reset both buttons */
   btnUsa.className='country-btn';
   btnOther.className='country-btn';
-
-  /* Show the cards container */
   container.style.display='block';
-
-  /* Close all accordions first */
   ['wa1','wa2','wa3','wa4'].forEach(function(id){
     var el=document.getElementById(id);
     if(el){
@@ -861,37 +911,27 @@ function setCountry(c){
       if(b){b.style.maxHeight='0px';b.style.opacity='0';}
     }
   });
-
   if(c==='usa'){
     btnUsa.className='country-btn selected-usa';
     note.style.display='block';
     note.style.background='linear-gradient(145deg,rgba(232,194,120,.12),rgba(160,112,0,.06))';
     note.style.border='1px solid var(--gold-line)';
     note.innerHTML='<span style="color:var(--gold);font-family:\'IBM Plex Mono\',monospace;font-size:9px;font-weight:600;letter-spacing:.12em">✓ SHOWING SECTIONS 1 · 2 · 3 · 4</span><br><span style="font-size:11px;color:var(--t2)">Bank Transfer &amp; USDT both available for USA hosts</span>';
-
-    /* USA: show all 4 cards */
     showCard('wa1', true, '01');
     showCard('wa2', true, '02');
     showCard('wa3', true, '03');
     showCard('wa4', true, '04');
-
-    /* Open card 1 by default */
     openAcc('wa1');
-
   } else {
     btnOther.className='country-btn selected-other';
     note.style.display='block';
     note.style.background='linear-gradient(145deg,rgba(56,189,248,.10),rgba(3,105,161,.05))';
     note.style.border='1px solid rgba(56,189,248,.35)';
     note.innerHTML='<span style="color:var(--sky);font-family:\'IBM Plex Mono\',monospace;font-size:9px;font-weight:600;letter-spacing:.12em">✓ SHOWING SECTIONS 1 · 2 · 3</span><br><span style="font-size:11px;color:var(--t2)">USDT is the only withdrawal method for non-USA hosts</span>';
-
-    /* Other: show cards 1, 3, 4 — hide card 2 (Bank) */
     showCard('wa1', true, '01');
     showCard('wa2', false, '');
     showCard('wa3', true, '02');
     showCard('wa4', true, '03');
-
-    /* Open card 1 by default */
     openAcc('wa1');
   }
 }
@@ -920,7 +960,6 @@ function openAcc(id){
   el.classList.add('open');
   var body=el.querySelector('.ab');
   if(body){
-    /* slight delay to allow display:block to render first */
     setTimeout(function(){
       body.style.maxHeight=(body.scrollHeight+600)+'px';
       body.style.opacity='1';
@@ -928,9 +967,13 @@ function openAcc(id){
   }
 }
 
-/* ── TRANSLATIONS ── */
+/* ══════════════════════════════════════════════
+   TRANSLATIONS
+══════════════════════════════════════════════ */
 var T={
   en:{
+    'choose-lang-lbl':'Choose Language',
+    'platform-sub':'Live Streaming Platform',
     'h-eyebrow':'Official Documents','h-title2':'Policy Hub',
     'h-sub':'Rules, guidelines &amp; resources for hosts &amp; agencies.',
     'nav-policies-lbl':'Policies','nav-auth-lbl':'Host Authentication','nav-contact-lbl':'Contact',
@@ -939,6 +982,7 @@ var T={
     'nav-auth-title':'Host Authentication','nav-auth-sub':'Step-by-step authentication &amp; withdrawal guide',
     'nav-contact-title':'Contact Us','nav-contact-sub':'Get in touch with Country Manager',
     'nav-channel-title':'Join Official Channel','nav-channel-sub':'Daily updates on WhatsApp',
+    'updated-badge':'Updated',
     'footer-home':'All Rights Reserved','footer-host':'All Rights Reserved','footer-agency':'All Rights Reserved','footer-auth':'All Rights Reserved',
     'back-txt':'Back',
     'cs-label':'Where are you based?','cs-sublabel':'Select your country to see the relevant sections',
@@ -1052,36 +1096,250 @@ var T={
   }
 };
 
+/* ── ARABIC TRANSLATIONS ── */
+T.ar = {
+  'choose-lang-lbl':'اختر اللغة',
+  'platform-sub':'منصة البث المباشر',
+  'h-eyebrow':'الوثائق الرسمية',
+  'h-title2':'مركز السياسات',
+  'h-sub':'القواعد والإرشادات والموارد للمضيفين والوكالات.',
+  'nav-policies-lbl':'السياسات',
+  'nav-auth-lbl':'توثيق المضيف',
+  'nav-contact-lbl':'تواصل معنا',
+  'nav-host-title':'سياسة المضيف',
+  'nav-host-sub':'القواعد والإرشادات للمضيفين',
+  'nav-agency-title':'سياسة الوكالة',
+  'nav-agency-sub':'شروط وأحكام الوكالة',
+  'nav-auth-title':'توثيق المضيف',
+  'nav-auth-sub':'دليل خطوة بخطوة للتوثيق والسحب',
+  'nav-contact-title':'تواصل معنا',
+  'nav-contact-sub':'تواصل مع مدير الدولة',
+  'nav-channel-title':'انضم إلى القناة الرسمية',
+  'nav-channel-sub':'تحديثات يومية على واتساب',
+  'updated-badge':'محدّث',
+  'footer-home':'جميع الحقوق محفوظة',
+  'footer-host':'جميع الحقوق محفوظة',
+  'footer-agency':'جميع الحقوق محفوظة',
+  'footer-auth':'جميع الحقوق محفوظة',
+  'back-txt':'رجوع',
+  'cs-label':'أين تقع؟',
+  'cs-sublabel':'اختر دولتك لرؤية الأقسام المناسبة',
+  'cs-usa-sub':'الولايات المتحدة',
+  'cs-other-name':'دولة أخرى',
+  'cs-other-sub':'بقية العالم',
+  'host-ey':'🎙️ إرشادات المضيف',
+  'host-title':'سياسة',
+  'host-title2':'المضيف',
+  'host-a1':'هيكل راتب المضيف',
+  'host-a2':'عمولات ألعاب المضيف',
+  'host-a3':'سياسة المضيف المبتدئ',
+  'host-a4':'سياسة المضيف المميز',
+  'host-1-1':'١.١ حصة الهدايا الشخصية',
+  'host-basic-share':'الحصة الأساسية',
+  'host-share-row':'حصة المضيف',
+  'host-ex1':'إذا أرسل المستخدم <span class="hl-gold">10 آلاف عملة</span> أثناء البث المباشر، يحصل المضيف على <span class="hl-gold">10 آلاف ياقوتة</span>.',
+  'host-1-2':'١.٢ مكافأة المضيف الأسبوعية',
+  'host-vh':'هدف الساعات الصالحة',
+  'host-vd':'هدف الأيام الصالحة',
+  'host-wb':'المكافأة الأسبوعية',
+  'host-ex2':'إذا ربح المضيف <span class="hl-gold">100 ألف ياقوتة</span> في أسبوع واحد <span class="hl-pink">(الأحد 12:00 ظهراً → الأحد 12:00 ظهراً EST)</span>، يحصل على <span class="hl-gold">مكافأة 30 ألف ياقوتة (30%)</span> تُضاف في <span class="hl-purple">الاثنين</span>. للتأهل:',
+  'host-4d':'أكمل <strong>4 أيام نشطة</strong> على الأقل',
+  'host-10h':'بث لمدة إجمالية <strong>10 ساعات</strong> في الأسبوع',
+  'host-1-3':'١.٣ القواعد',
+  'host-r1':'<strong>معدل السحب:</strong> <span class="hl-gold">20,000 ياقوتة = 1 دولار</span>',
+  'host-r2':'<strong>تغيير اليوم:</strong> يومياً عند <span class="hl-pink">12:00 ظهراً (EST – توقيت نيويورك)</span>',
+  'host-r3':'<strong>الفترة الأسبوعية:</strong> <span class="hl-pink">الأحد 12:00 ظهراً إلى الأحد 12:00 ظهراً (EST)</span>',
+  'host-r4':'<strong>يوم صالح:</strong> بث لمدة لا تقل عن <span class="hl-gold">120 دقيقة (ساعتين)</span>',
+  'host-r5':'<strong>ساعة صالحة:</strong> 60+ دقيقة = <span class="hl-gold">ساعة صالحة واحدة</span>',
+  'host-r6':'<strong>الحد الأدنى للبث:</strong> جلسات أقل من <strong>30 دقيقة</strong> لا تُحتسب',
+  'host-r7':'<strong>دفع المكافأة:</strong> كل <span class="hl-purple">اثنين (بالياقوت)</span>',
+  'host-r8':'<strong>السحب:</strong> مرة واحدة يومياً، الحد الأدنى = <span class="hl-green">10 دولارات</span>',
+  'host-agency-change':'قواعد تغيير الوكالة',
+  'host-change-intro':'يمكن للمضيف تغيير الوكالة إذا:',
+  'host-c1':'لم يبث لمدة <strong>120 يوماً</strong>',
+  'host-c2':'لم يستطع التواصل مع الوكالة لمدة <strong>أسبوعين</strong>',
+  'host-c3':'اتفق المضيف والوكالة على ذلك',
+  'host-strict':'أي إساءة أو غش أثناء النقل → <span class="hl-red">تحذير / تعليق / حظر</span>',
+  'host-game-th1':'مبلغ الرهان (عملات)',
+  'host-game-th2':'المكافأة (ياقوتة)',
+  'host-g1':'يكسب المضيف <strong>ياقوتة واحدة</strong> مقابل كل <strong>1,000 عملة</strong> مستخدمة في الألعاب',
+  'host-g2':'هذا الدخل <strong>لا يُحتسب</strong> ضمن الأهداف الأسبوعية',
+  'host-g3':'تُضاف الأرباح <strong>فوراً</strong> بعد انتهاء كل بث',
+  'host-rook-th1':'الدورة',
+  'host-rook-th2':'مهمة الياقوت الأسبوعية',
+  'host-rook-th3':'الأيام الصالحة',
+  'host-rook-th4':'الساعات الصالحة',
+  'host-rook-th5':'الضمان',
+  'host-rk1':'يجب <strong>موافقة</strong> المضيفين الجدد للحصول على الضمان في الأسابيع الأربعة الأولى',
+  'host-rk2':'<strong>الأسبوع 1:</strong> 50,000 ياقوتة',
+  'host-rk3':'<strong>الأسبوع 2:</strong> 100,000 ياقوتة',
+  'host-rk4':'<strong>الأسبوع 3:</strong> 150,000 ياقوتة',
+  'host-rk5':'<strong>الأسبوع 4:</strong> 150,000 ياقوتة',
+  'host-rk6':'عدم تحقيق هدف أسبوع ما <strong>لا يُلغي</strong> ضمان الأسبوع التالي',
+  'host-rk7':'إذا لم تُستوفَ الأيام والساعات الصالحة ← <strong>الراتب وفق السياسة الأساسية</strong>',
+  'host-rk8':'من <strong>الأسبوع 5 فصاعداً</strong>، تُطبق <strong>السياسة الأساسية فقط</strong>',
+  'host-pres-req':'٤.١ المتطلبات',
+  'host-pres-rem':'٤.٢ الإزالة من المميز',
+  'host-pr1':'مظهر نظيف واحترافي',
+  'host-pr2':'الالتزام بالجدول وإتمام الساعات',
+  'host-pr3':'الحفاظ على خلفية مرتبة',
+  'host-pr4':'الحفاظ على جودة صوت وفيديو جيدة',
+  'host-pr5':'التفاعل الفعّال مع المشاهدين',
+  'host-pr6':'اتباع تعليمات الفريق والمشاركة في الأنشطة',
+  'host-rm1':'عدم البث بانتظام أو إظهار سلوك سيء',
+  'host-rm2':'تجاهل المشاهدين أو التعامل بعدم احترام',
+  'host-rm3':'إعداد فوضوي دون تحسين',
+  'host-rm4':'عدم اتباع تعليمات الفريق',
+  'host-rm5':'جودة بث رديئة دون إصلاح',
+  'host-rm6':'انتهاك قواعد المنصة أو القوانين',
+  'ag-ey':'🏢 إرشادات الوكالة',
+  'ag-title':'سياسة',
+  'ag-title2':'الوكالة',
+  'ag-a1':'عمولات الوكالة',
+  'ag-a2':'سياسة راتب تفعيل المضيف',
+  'ag-a3':'صرف العمولات',
+  'ag-a4':'قواعد السحب',
+  'ag-a5':'قواعد تغيير الوكالة',
+  'ag-th1':'المستوى',
+  'ag-th2':'الإيراد الأسبوعي للوكالة (ياقوتة)',
+  'ag-th3':'العمولة',
+  'ag-req':'متطلبات الوكالة',
+  'ag-req1':'يجب أن يكون لدى الوكالة <strong>5 مضيفين نشطين على الأقل كل أسبوع</strong>',
+  'ag-req2':'يجب على الوكالة دعم المنصة: تشجيع المضيفين على البث المباشر والمشاركة في الفعاليات',
+  'ag-period':'فترة المهمة الأسبوعية',
+  'ag-start':'البداية',
+  'ag-end':'النهاية',
+  'ag-reset':'تتجدد المهام كل أسبوع يوم الأحد عند 12:00 ظهراً EST',
+  'ag-th-lv':'مستوى الوكالة',
+  'ag-th-mon':'الهدف الشهري (ياقوتة)',
+  'ag-th-ah':'المضيفون النشطون',
+  'ag-th-pay':'الراتب الأساسي',
+  'ag-sal-intro':'تحصل الوكالة على <strong>راتب أساسي شهري</strong> إذا:',
+  'ag-sal1':'حققت <strong>هدف الياقوت الشهري</strong>',
+  'ag-sal2':'حافظت على <strong>العدد المطلوب من المضيفين النشطين</strong>',
+  'ag-active-def':'تعريف: المضيف النشط',
+  'ag-d1':'إتمام <strong>10 أيام صالحة</strong> على الأقل في الشهر',
+  'ag-d2':'إتمام <strong>20 ساعة صالحة</strong> على الأقل في الشهر',
+  'ag-d3':'كسب <strong>100,000 ياقوتة أو أكثر</strong> من الهدايا في الشهر',
+  'ag-disq':'عدم تحقيق هدف الإيراد الشهري أو متطلب المضيفين النشطين سيؤدي إلى <span class="hl-red">الاستبعاد من سياسة راتب تفعيل المضيف</span>.',
+  'ag-payout':'تُدفع العمولات <span class="hl-gold">كل اثنين بالياقوت</span>.',
+  'ag-wd1':'يمكن تقديم طلبات السحب <strong>مرة واحدة يومياً</strong>',
+  'ag-wd2':'الحد الأدنى للسحب: <span class="hl-green">10 دولارات</span>',
+  'ag-fee':'هيكل رسوم السحب',
+  'ag-fee-th1':'مبلغ السحب',
+  'ag-fee-th2':'الرسوم المطبقة',
+  'ag-fee-r1':'أقل من 100 دولار',
+  'ag-fee-r2':'100 دولار فأكثر',
+  'ag-fee-v1':'رسوم ثابتة 2 دولار لكل معاملة',
+  'ag-fee-v2':'2% من مبلغ السحب',
+  'ag-change-intro':'يمكن للمضيف تغيير الوكالة إذا:',
+  'ag-ch1':'لا نشاط لمدة <strong>120 يوماً</strong>',
+  'ag-ch2':'عدم القدرة على التواصل مع الوكالة لمدة <strong>أسبوعين</strong>',
+  'ag-ch3':'موافقة طرفي الوكالة والمضيف',
+  'ag-cheat':'أي غش أو إساءة → <span class="hl-red">تحذير / تعليق / حظر</span>',
+  'au-ey':'💸 دليل السحب',
+  'au-title':'سحب',
+  'au-title2':'الراتب',
+  'au-a1':'عملية انضمام المضيف إلى الوكالة',
+  'au-a2':'التوثيق والسحب البنكي',
+  'au-a3':'التوثيق والسحب عبر USDT',
+  'au-a4':'كيفية التقديم للسحب',
+  'au-step1':'<strong>الخطوة 1:</strong> افتح التطبيق ← اضغط <strong>قسم أنا</strong> ← اضغط <strong>المزيد</strong> ← اضغط <strong>مركز المضيف</strong> ← اضغط <strong>قسم الوكالة</strong>',
+  'au-step2':'<strong>الخطوة 2:</strong> أدخل <strong>رقم هوية الوكالة</strong>، اضغط <strong>ربط</strong>، ثم أكّد الوكالة التي تنضم إليها.',
+  'au-congrats':'🎉 <strong>تهانينا!</strong> لقد انضممت إلى وكالتك المطلوبة.',
+  'au-usa-only':'للمضيفين في الولايات المتحدة فقط',
+  'au-usa-note':'هذا الخيار متاح <strong style="color:var(--gold)">فقط للمضيفين المقيمين في الولايات المتحدة</strong>. إذا كنت من دولة أخرى، استخدم القسم 3 (USDT) بدلاً من ذلك.',
+  'au-steps':'📱 الخطوات',
+  'au-steps-bank':'افتح التطبيق ← <strong>قسم أنا</strong> ← <strong>المزيد</strong> ← <strong>مركز المضيف</strong> ← <strong>التوثيق</strong>',
+  'au-steps-usdt':'افتح التطبيق ← <strong>قسم أنا</strong> ← <strong>المزيد</strong> ← <strong>مركز المضيف</strong> ← <strong>التوثيق</strong>',
+  'au-id-info':'🪪 معلومات الهوية',
+  'au-id1':'<strong>الاسم:</strong> الاسم الحقيقي كما في بطاقة الهوية الوطنية',
+  'au-id2':'<strong>رقم الهوية:</strong> رقم الهوية الوطنية',
+  'au-id3':'<strong>واتساب:</strong> الرقم مع رمز الدولة',
+  'au-id4':'<strong>Gmail:</strong> عنوان بريدك الإلكتروني',
+  'au-photos':'📸 رفع الصور',
+  'au-ph1':'<strong>صورة بطاقة الهوية:</strong> ارفع الجهة الأمامية لهويتك الوطنية',
+  'au-ph2':'<strong>صورة ممسكاً بالهوية:</strong> سيلفي مع الهوية بجانب وجهك',
+  'au-ph3':'<strong>بوستر الغرفة المباشرة:</strong> ارفع صورة شخصية جيدة',
+  'au-bank':'🏦 تفاصيل الدفع البنكي',
+  'au-b1':'<strong>طريقة الدفع:</strong> اختر <span class="hl-gold">"Bank_Transfer"</span>',
+  'au-b2':'<strong>رمز البنك:</strong> أدخل رقم التوجيه البنكي',
+  'au-b3':'<strong>نوع الحساب:</strong> "جاري" أو "توفير"',
+  'au-b4':'<strong>اسم الحساب:</strong> اسم حسابك البنكي',
+  'au-b5':'<strong>رقم الحساب:</strong> رقم حسابك البنكي',
+  'au-b6':'<strong>العنوان / الولاية / المدينة / الرمز البريدي</strong>',
+  'au-after':'بعد الملء، <strong>أرسل هويتك للموافقة</strong>. بعد الموافقة يمكنك البدء في البث وسحب أرباحك.',
+  'au-warn-bank':'تأكد من إدخال بيانات البنك <strong>بالضبط كما هي مسجلة</strong> — قد تؤدي البيانات الخاطئة إلى <span class="hl-red">مدفوعات فاشلة أو متأخرة</span>.',
+  'au-who':'من يجب أن يستخدم هذا؟',
+  'au-usa-both':'تحويل بنكي أو USDT',
+  'au-all-countries':'جميع الدول الأخرى',
+  'au-world-only':'USDT هو الخيار الوحيد',
+  'au-id-photo':'🪪 هوية وصور الملف الشخصي',
+  'au-id5':'<strong>الدولة/المنطقة:</strong> اختر من القائمة المنسدلة',
+  'au-id1b':'<strong>الاسم:</strong> الاسم الحقيقي كما في بطاقة الهوية الوطنية',
+  'au-id2b':'<strong>رقم الهوية:</strong> رقم الهوية الوطنية',
+  'au-id3b':'<strong>واتساب:</strong> الرقم مع رمز الدولة',
+  'au-id4b':'<strong>Gmail:</strong> عنوان البريد الإلكتروني',
+  'au-ph1b':'<strong>صورة بطاقة الهوية:</strong> الجهة الأمامية للهوية الوطنية',
+  'au-ph2b':'<strong>صورة ممسكاً بالهوية:</strong> سيلفي مع الهوية بجانب الوجه',
+  'au-ph3b':'<strong>بوستر الغرفة المباشرة:</strong> صورة شخصية جيدة',
+  'au-usdt':'💰 تفاصيل دفع USDT',
+  'au-u1':'<strong>طريقة الدفع:</strong> اختر <span class="hl-gold">"C-Wallet"</span> لـ USDT',
+  'au-u2':'<strong>العملة:</strong> <span class="hl-green">USDT</span> — يتم اختيارها تلقائياً',
+  'au-u3':'<strong>شبكة البلوكشين:</strong> اختر من: <span class="rchip rc-s">Tron</span><span class="rchip rc-p">ERC</span><span class="rchip rc-y">SOL</span><span class="rchip rc-r">BSC</span>',
+  'au-u4':'<strong>عنوان المحفظة:</strong> أدخل العنوان المطابق للشبكة المختارة',
+  'au-after2':'بعد الملء، <strong>أرسل هويتك للموافقة</strong>. بعد الموافقة يمكنك البدء في البث وسحب أرباحك.',
+  'au-warn-usdt':'تأكد من أن عنوان المحفظة يطابق البلوكشين المختار تماماً — العنوان الخاطئ قد يؤدي إلى <span class="hl-red">فقدان دائم للأموال</span>.',
+  'au-wd-steps':'افتح التطبيق ← <strong>قسم أنا</strong> ← <strong>ياقوتي</strong> ← <strong>سحب (WD)</strong> ← أدخل القيمة بالياقوت',
+  'au-ex':'لسحب <span class="hl-gold">100 دولار</span>، أدخل <span class="hl-gold">2,000,000 ياقوتة</span> في حقل السحب.',
+  'au-rate':'<strong>المعدل:</strong> <span class="hl-gold">20,000 ياقوتة = 1 دولار</span>',
+  'au-freq':'<strong>التكرار:</strong> مرة واحدة يومياً',
+  'au-min':'<strong>الحد الأدنى:</strong> <span class="hl-green">10 دولارات</span>'
+};
+
+/* ── OTHER LANGUAGE TRANSLATIONS (inherit from en) ── */
 T.es=Object.assign({},T.en,{
+  'choose-lang-lbl':'Elegir Idioma',
+  'platform-sub':'Plataforma de Transmisión en Vivo',
   'h-eyebrow':'Documentos Oficiales','h-title2':'Centro de Políticas',
   'h-sub':'Reglas, directrices y recursos para hosts y agencias.',
   'cs-label':'¿Dónde estás ubicado?','cs-sublabel':'Selecciona tu país para ver las secciones relevantes',
   'cs-usa-sub':'Estados Unidos','cs-other-name':'Otro País','cs-other-sub':'Resto del Mundo',
-  'back-txt':'Volver','footer-home':'Todos los Derechos Reservados','footer-host':'Todos los Derechos Reservados','footer-agency':'Todos los Derechos Reservados','footer-auth':'Todos los Derechos Reservados',
+  'back-txt':'Volver','updated-badge':'Actualizado',
+  'footer-home':'Todos los Derechos Reservados','footer-host':'Todos los Derechos Reservados','footer-agency':'Todos los Derechos Reservados','footer-auth':'Todos los Derechos Reservados',
   'au-a2':'Autenticación y Retiro Bancario','au-a3':'Autenticación y Retiro USDT'
 });
 T.pt=Object.assign({},T.en,{
+  'choose-lang-lbl':'Escolher Idioma',
+  'platform-sub':'Plataforma de Transmissão ao Vivo',
   'h-eyebrow':'Documentos Oficiais','h-title2':'Central de Políticas',
   'h-sub':'Regras, diretrizes e recursos para hosts e agências.',
   'cs-label':'Onde você está localizado?','cs-sublabel':'Selecione seu país para ver as seções relevantes',
   'cs-usa-sub':'Estados Unidos','cs-other-name':'Outro País','cs-other-sub':'Resto do Mundo',
-  'back-txt':'Voltar','footer-home':'Todos os Direitos Reservados','footer-host':'Todos os Direitos Reservados','footer-agency':'Todos os Direitos Reservados','footer-auth':'Todos os Direitos Reservados',
+  'back-txt':'Voltar','updated-badge':'Atualizado',
+  'footer-home':'Todos os Direitos Reservados','footer-host':'Todos os Direitos Reservados','footer-agency':'Todos os Direitos Reservados','footer-auth':'Todos os Direitos Reservados',
   'au-a2':'Autenticação e Saque Bancário','au-a3':'Autenticação e Saque USDT'
 });
 T.ru=Object.assign({},T.en,{
+  'choose-lang-lbl':'Выбрать язык',
+  'platform-sub':'Платформа прямых трансляций',
   'h-eyebrow':'Официальные документы','h-title2':'Центр политики',
   'h-sub':'Правила, руководства и ресурсы для хостов и агентств.',
   'cs-label':'Где вы находитесь?','cs-sublabel':'Выберите страну, чтобы увидеть нужные разделы',
   'cs-usa-sub':'Соединённые Штаты','cs-other-name':'Другая страна','cs-other-sub':'Остальной мир',
-  'back-txt':'Назад','footer-home':'Все права защищены','footer-host':'Все права защищены','footer-agency':'Все права защищены','footer-auth':'Все права защищены',
+  'back-txt':'Назад','updated-badge':'Обновлено',
+  'footer-home':'Все права защищены','footer-host':'Все права защищены','footer-agency':'Все права защищены','footer-auth':'Все права защищены',
   'au-a2':'Аутентификация и банковский вывод','au-a3':'Аутентификация и вывод USDT'
 });
 T.uk=Object.assign({},T.en,{
+  'choose-lang-lbl':'Обрати мову',
+  'platform-sub':'Платформа прямих трансляцій',
   'h-eyebrow':'Офіційні документи','h-title2':'Центр політики',
   'h-sub':'Правила, рекомендації та ресурси для хостів і агентств.',
   'cs-label':'Де ви знаходитесь?','cs-sublabel':'Оберіть країну, щоб побачити відповідні розділи',
   'cs-usa-sub':'Сполучені Штати','cs-other-name':'Інша країна','cs-other-sub':'Решта світу',
-  'back-txt':'Назад','footer-home':'Усі права захищені','footer-host':'Усі права захищені','footer-agency':'Усі права захищені','footer-auth':'Усі права захищені',
+  'back-txt':'Назад','updated-badge':'Оновлено',
+  'footer-home':'Усі права захищені','footer-host':'Усі права захищені','footer-agency':'Усі права захищені','footer-auth':'Усі права захищені',
   'au-a2':'Автентифікація та банківський вивід','au-a3':'Автентифікація та вивід USDT'
 });
 
@@ -1090,12 +1348,33 @@ var curLang='en';
 function applyLang(lang){
   curLang=lang;
   var d=T[lang]||T.en;
+
+  /* Handle RTL for Arabic */
+  var html=document.documentElement;
+  if(lang==='ar'){
+    html.setAttribute('dir','rtl');
+    html.setAttribute('lang','ar');
+    document.body.style.fontFamily="'Cairo', sans-serif";
+  } else {
+    html.setAttribute('dir','ltr');
+    html.setAttribute('lang',lang);
+    document.body.style.fontFamily="'Inter', sans-serif";
+  }
+
   Object.keys(d).forEach(function(key){
     var el=document.getElementById(key);
     if(el) el.innerHTML=d[key];
   });
   document.querySelectorAll('.back-txt').forEach(function(el){
     if(d['back-txt']) el.innerHTML=d['back-txt'];
+  });
+  document.querySelectorAll('.atxt').forEach(function(el){
+    if(lang==='ar') el.style.fontFamily="'Cairo', sans-serif";
+    else el.style.fontFamily="'Inter', sans-serif";
+  });
+  document.querySelectorAll('.cth,.cts').forEach(function(el){
+    if(lang==='ar') el.style.fontFamily="'Cairo', sans-serif";
+    else el.style.fontFamily="'Inter', sans-serif";
   });
 }
 
@@ -1141,7 +1420,7 @@ cg.style.cssText='position:fixed;width:400px;height:400px;border-radius:50%;back
 document.body.appendChild(cg);
 document.addEventListener('mousemove',function(e){cg.style.transform='translate('+(e.clientX-200)+'px,'+(e.clientY-200)+'px)';});
 
-/* ── INIT OPEN ACCORDIONS (host & agency pages only — NOT auth) ── */
+/* ── INIT OPEN ACCORDIONS ── */
 document.querySelectorAll('#pg-host .acc.open, #pg-agency .acc.open').forEach(function(acc){
   var b=acc.querySelector('.ab');
   if(b){b.style.maxHeight='2000px';b.style.opacity='1';}
