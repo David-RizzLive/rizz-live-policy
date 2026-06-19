@@ -346,6 +346,26 @@
 
   .divider { height: 1px; background: var(--purple-pale); margin: 14px 0; }
 
+  .fee-table { width:100%; border-collapse:collapse; margin:10px 0; }
+  .fee-table td { padding:11px 14px; font-size:.84rem; border-bottom:1px solid var(--purple-pale); }
+  .fee-table tr:last-child td { border-bottom:none; }
+  .fee-table td:last-child { text-align:right; font-weight:700; color:#EF4444; }
+  .fee-table td:first-child { color:var(--text-mid); }
+
+  .wallet-section { margin-top:16px; }
+  .wallet-title {
+    display:flex; align-items:center; gap:8px;
+    font-size:.8rem; font-weight:700; color:var(--text-mid);
+    margin-bottom:10px; padding-bottom:8px;
+    border-bottom:1.5px dashed var(--border);
+  }
+  .wallet-title .wtag {
+    background:var(--purple-pale); color:var(--purple);
+    font-size:.68rem; font-weight:800; letter-spacing:.8px;
+    padding:2px 10px; border-radius:99px; text-transform:uppercase;
+  }
+  .wallet-title .wtag.cwallet { background:var(--gold-light); color:#92400E; }
+
   /* footer note */
   .policy-footer {
     margin: 24px 20px 0;
@@ -415,6 +435,8 @@
     .sub-heading { font-size: .84rem; margin: 14px 0 6px; }
     .pill-list li, .warn-list li { font-size: .78rem; }
     .highlight-box { font-size: .78rem; padding: 11px 12px; }
+    .fee-table td { padding: 9px 10px; font-size: .78rem; }
+    .wallet-title { font-size: .74rem; }
 
     /* Footer */
     .policy-footer { margin: 18px 12px 0; font-size: .72rem; padding: 13px 14px; }
@@ -765,6 +787,64 @@
       </div>
     </div>
 
+    <!-- CARD 5: Withdrawal Rules -->
+    <div class="acc-card" id="card-5">
+      <div class="acc-trigger" onclick="toggleCard('card-5')">
+        <div class="acc-icon blue">🏦</div>
+        <div class="acc-meta">
+          <div class="acc-num" data-t="c5_num"></div>
+          <div class="acc-title" data-t="c5_title">Withdrawal Rules</div>
+        </div>
+        <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="acc-content">
+
+          <ul class="pill-list" style="margin-top:16px">
+            <li data-t="c5_rule1">Withdrawal requests may be submitted once per day</li>
+            <li data-t="c5_rule2">Minimum withdrawal amount: $10 USD</li>
+          </ul>
+
+          <!-- Bank Transfer -->
+          <div class="wallet-section">
+            <div class="wallet-title">
+              <span class="wtag" data-t="bank_label">🏦 Bank Transfer</span>
+              <span data-t="bank_sub" style="color:var(--text-soft);font-size:.78rem;font-weight:500">Fee Structure</span>
+            </div>
+            <table class="fee-table">
+              <tr>
+                <td data-t="fee_bank_1_range">Withdrawal less than <strong>$100</strong></td>
+                <td data-t="fee_bank_1_val">$2 flat fee</td>
+              </tr>
+              <tr>
+                <td data-t="fee_bank_2_range">Withdrawal <strong>$100 and above</strong></td>
+                <td data-t="fee_bank_2_val">2% of amount</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- C-Wallet -->
+          <div class="wallet-section">
+            <div class="wallet-title">
+              <span class="wtag cwallet" data-t="cwallet_label">💳 C-Wallet</span>
+              <span data-t="cwallet_sub" style="color:var(--text-soft);font-size:.78rem;font-weight:500">Fee Structure</span>
+            </div>
+            <table class="fee-table">
+              <tr>
+                <td data-t="fee_cw_1_range">Withdrawal less than <strong>$100</strong></td>
+                <td data-t="fee_cw_1_val">$3 flat fee</td>
+              </tr>
+              <tr>
+                <td data-t="fee_cw_2_range">Withdrawal <strong>$100 and above</strong></td>
+                <td data-t="fee_cw_2_val">3% of amount</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div><!-- /cards-wrap -->
 
   <div class="policy-footer">
@@ -801,6 +881,15 @@ const T = {
     c4_conditions:"Program Conditions", c4_c1:"Only hosts selected through the Audition Video process are eligible.", c4_c2:"Prestige status remains active unless removed for failing standards.", c4_c3:"Complete 4 active days and 10 streaming hours each week.", c4_c4:"Achieve weekly Ruby target to receive the $15 guarantee.", c4_c5:"Missing one week's target does not automatically remove host from the program.",
     c4_requirements:"Host Requirements", c4_r1:"Maintaining a clean and presentable appearance", c4_r2:"Following the assigned streaming schedule", c4_r3:"Completing the required streaming hours", c4_r4:"Keeping a neat and professional streaming background", c4_r5:"Providing clear audio and video quality", c4_r6:"Engaging actively and respectfully with viewers", c4_r7:"Participating in agency activities and events", c4_r8:"Following team instructions and platform guidelines",
     c4_removal:"Removal from Prestige Program", c4_rem1:"Stream irregularly or remain inactive", c4_rem2:"Display unprofessional behavior or a poor attitude", c4_rem3:"Ignore or disrespect viewers", c4_rem4:"Maintain an inappropriate or untidy streaming setup", c4_rem5:"Fail to follow team instructions", c4_rem6:"Consistently deliver poor stream quality without improvement", c4_rem7:"Violate platform rules, agency policies, or local laws",
+    c5_num:"", c5_title:"Withdrawal Rules",
+    c5_rule1:"Withdrawal requests may be submitted once per day",
+    c5_rule2:"Minimum withdrawal amount: $10 USD",
+    bank_label:"🏦 Bank Transfer", bank_sub:"Fee Structure",
+    fee_bank_1_range:"Withdrawal less than <strong>$100</strong>", fee_bank_1_val:"$2 flat fee",
+    fee_bank_2_range:"Withdrawal <strong>$100 and above</strong>", fee_bank_2_val:"2% of amount",
+    cwallet_label:"💳 C-Wallet", cwallet_sub:"Fee Structure",
+    fee_cw_1_range:"Withdrawal less than <strong>$100</strong>", fee_cw_1_val:"$3 flat fee",
+    fee_cw_2_range:"Withdrawal <strong>$100 and above</strong>", fee_cw_2_val:"3% of amount",
     footer_note:"📋 Note:", footer_text:"Rizz Live reserves the right to modify or update this policy at any time to maintain a fair and sustainable platform for all hosts and viewers."
   },
 
@@ -829,6 +918,15 @@ const T = {
     c4_conditions:"Condiciones del Programa", c4_c1:"Solo los anfitriones seleccionados mediante el Video de Audición son elegibles.", c4_c2:"El estado Prestigio permanece activo a menos que el anfitrión sea removido por incumplimiento.", c4_c3:"Completar 4 días activos y 10 horas de transmisión por semana.", c4_c4:"Alcanzar el objetivo semanal de Rubíes para recibir la garantía de $15.", c4_c5:"No cumplir el objetivo de una semana no elimina automáticamente al anfitrión del programa.",
     c4_requirements:"Requisitos del Anfitrión", c4_r1:"Mantener una apariencia limpia y presentable", c4_r2:"Seguir el horario de transmisión asignado", c4_r3:"Completar las horas de transmisión requeridas", c4_r4:"Mantener un fondo de transmisión ordenado y profesional", c4_r5:"Proporcionar calidad clara de audio y video", c4_r6:"Interactuar activa y respetuosamente con los espectadores", c4_r7:"Participar en actividades de la agencia y eventos", c4_r8:"Seguir las instrucciones del equipo y las directrices de la plataforma",
     c4_removal:"Eliminación del Programa Prestigio", c4_rem1:"Transmitir de forma irregular o permanecer inactivo", c4_rem2:"Mostrar comportamiento poco profesional o mala actitud", c4_rem3:"Ignorar o faltar al respeto a los espectadores", c4_rem4:"Mantener un entorno de transmisión inapropiado o desordenado", c4_rem5:"No seguir las instrucciones del equipo", c4_rem6:"Proporcionar consistentemente mala calidad sin mejora", c4_rem7:"Violar las reglas de la plataforma, políticas de la agencia o leyes locales",
+    c5_num:"", c5_title:"Reglas de Retiro",
+    c5_rule1:"Las solicitudes de retiro pueden enviarse una vez al día",
+    c5_rule2:"Monto mínimo de retiro: $10 USD",
+    bank_label:"🏦 Transferencia Bancaria", bank_sub:"Estructura de Tarifas",
+    fee_bank_1_range:"Retiro menor a <strong>$100</strong>", fee_bank_1_val:"Tarifa fija de $2",
+    fee_bank_2_range:"Retiro de <strong>$100 o más</strong>", fee_bank_2_val:"2% del monto",
+    cwallet_label:"💳 C-Wallet", cwallet_sub:"Estructura de Tarifas",
+    fee_cw_1_range:"Retiro menor a <strong>$100</strong>", fee_cw_1_val:"Tarifa fija de $3",
+    fee_cw_2_range:"Retiro de <strong>$100 o más</strong>", fee_cw_2_val:"3% del monto",
     footer_note:"📋 Nota:", footer_text:"Rizz Live se reserva el derecho de modificar o actualizar esta política en cualquier momento para mantener una plataforma justa y sostenible para todos los anfitriones y espectadores."
   },
 
@@ -857,6 +955,15 @@ const T = {
     c4_conditions:"Condições do Programa", c4_c1:"Apenas anfitriões selecionados pelo processo de Vídeo de Audição são elegíveis.", c4_c2:"O status Prestígio permanece ativo a menos que o anfitrião seja removido por não cumprir os padrões.", c4_c3:"Completar 4 dias ativos e 10 horas de transmissão por semana.", c4_c4:"Atingir a meta semanal de Rubis para receber a garantia de $15.", c4_c5:"Não cumprir a meta de uma semana não remove automaticamente o anfitrião do programa.",
     c4_requirements:"Requisitos do Anfitrião", c4_r1:"Manter uma aparência limpa e apresentável", c4_r2:"Seguir o horário de transmissão atribuído", c4_r3:"Completar as horas de transmissão exigidas", c4_r4:"Manter um fundo de transmissão organizado e profissional", c4_r5:"Fornecer qualidade clara de áudio e vídeo", c4_r6:"Interagir ativa e respeitosamente com os espectadores", c4_r7:"Participar de atividades da agência e eventos", c4_r8:"Seguir as instruções da equipe e as diretrizes da plataforma",
     c4_removal:"Remoção do Programa Prestígio", c4_rem1:"Transmitir de forma irregular ou permanecer inativo", c4_rem2:"Demonstrar comportamento não profissional ou má atitude", c4_rem3:"Ignorar ou desrespeitar os espectadores", c4_rem4:"Manter um ambiente de transmissão inapropriado ou bagunçado", c4_rem5:"Não seguir as instruções da equipe", c4_rem6:"Consistentemente fornecer má qualidade sem melhora", c4_rem7:"Violar as regras da plataforma, políticas da agência ou leis locais",
+    c5_num:"", c5_title:"Regras de Saque",
+    c5_rule1:"Solicitações de saque podem ser enviadas uma vez por dia",
+    c5_rule2:"Valor mínimo de saque: $10 USD",
+    bank_label:"🏦 Transferência Bancária", bank_sub:"Estrutura de Taxas",
+    fee_bank_1_range:"Saque menor que <strong>$100</strong>", fee_bank_1_val:"Taxa fixa de $2",
+    fee_bank_2_range:"Saque de <strong>$100 ou mais</strong>", fee_bank_2_val:"2% do valor",
+    cwallet_label:"💳 C-Wallet", cwallet_sub:"Estrutura de Taxas",
+    fee_cw_1_range:"Saque menor que <strong>$100</strong>", fee_cw_1_val:"Taxa fixa de $3",
+    fee_cw_2_range:"Saque de <strong>$100 ou mais</strong>", fee_cw_2_val:"3% do valor",
     footer_note:"📋 Nota:", footer_text:"Rizz Live reserva-se o direito de modificar ou atualizar esta política a qualquer momento para manter uma plataforma justa e sustentável para todos os anfitriões e espectadores."
   },
 
@@ -885,6 +992,15 @@ const T = {
     c4_conditions:"Условия программы", c4_c1:"Участвовать могут только хосты, отобранные через процесс видео-аудиции.", c4_c2:"Статус Престиж остаётся активным, пока хост не исключён за несоответствие стандартам.", c4_c3:"Выполнять 4 активных дня и 10 часов трансляций каждую неделю.", c4_c4:"Достичь еженедельной цели по Рубинам для получения гарантии $15.", c4_c5:"Невыполнение цели за одну неделю не исключает хоста из программы автоматически.",
     c4_requirements:"Требования к хосту", c4_r1:"Поддерживать чистый и презентабельный вид", c4_r2:"Соблюдать назначенное расписание трансляций", c4_r3:"Выполнять необходимые часы трансляций", c4_r4:"Поддерживать аккуратный и профессиональный фон", c4_r5:"Обеспечивать чёткое качество звука и видео", c4_r6:"Активно и уважительно общаться со зрителями", c4_r7:"Участвовать в мероприятиях агентства", c4_r8:"Следовать инструкциям команды и правилам платформы",
     c4_removal:"Исключение из программы Престиж", c4_rem1:"Нерегулярные трансляции или длительная неактивность", c4_rem2:"Непрофессиональное поведение или плохое отношение", c4_rem3:"Игнорирование или неуважение к зрителям", c4_rem4:"Неподходящая или неопрятная обстановка для трансляций", c4_rem5:"Невыполнение инструкций команды", c4_rem6:"Постоянное низкое качество без улучшений", c4_rem7:"Нарушение правил платформы, политики агентства или местных законов",
+    c5_num:"", c5_title:"Правила вывода средств",
+    c5_rule1:"Запросы на вывод могут подаваться один раз в день",
+    c5_rule2:"Минимальная сумма вывода: $10 USD",
+    bank_label:"🏦 Банковский перевод", bank_sub:"Структура комиссий",
+    fee_bank_1_range:"Вывод менее <strong>$100</strong>", fee_bank_1_val:"Фиксированная комиссия $2",
+    fee_bank_2_range:"Вывод <strong>$100 и выше</strong>", fee_bank_2_val:"2% от суммы",
+    cwallet_label:"💳 C-Wallet", cwallet_sub:"Структура комиссий",
+    fee_cw_1_range:"Вывод менее <strong>$100</strong>", fee_cw_1_val:"Фиксированная комиссия $3",
+    fee_cw_2_range:"Вывод <strong>$100 и выше</strong>", fee_cw_2_val:"3% от суммы",
     footer_note:"📋 Примечание:", footer_text:"Rizz Live оставляет за собой право изменять или обновлять данную политику в любое время для поддержания справедливой и устойчивой платформы для всех хостов и зрителей."
   },
 
@@ -913,6 +1029,15 @@ const T = {
     c4_conditions:"Умови програми", c4_c1:"Брати участь можуть лише хости, відібрані через процес відео-аудиції.", c4_c2:"Статус Престиж залишається активним, якщо хоста не виключено за невідповідність стандартам.", c4_c3:"Виконувати 4 активних дні та 10 годин трансляцій щотижня.", c4_c4:"Досягти щотижневої мети з Рубінів для отримання гарантії $15.", c4_c5:"Невиконання мети за один тиждень не виключає хоста з програми автоматично.",
     c4_requirements:"Вимоги до хоста", c4_r1:"Підтримувати чистий та презентабельний вигляд", c4_r2:"Дотримуватися призначеного розкладу трансляцій", c4_r3:"Виконувати необхідну кількість годин трансляцій", c4_r4:"Підтримувати охайний та професійний фон", c4_r5:"Забезпечувати чітку якість звуку та відео", c4_r6:"Активно та шанобливо спілкуватися з глядачами", c4_r7:"Брати участь у заходах агентства", c4_r8:"Дотримуватися інструкцій команди та правил платформи",
     c4_removal:"Виключення з програми Престиж", c4_rem1:"Нерегулярні трансляції або тривала неактивність", c4_rem2:"Непрофесійна поведінка або погане ставлення", c4_rem3:"Ігнорування або неповага до глядачів", c4_rem4:"Неналежне або неохайне середовище для трансляцій", c4_rem5:"Невиконання інструкцій команди", c4_rem6:"Постійно низька якість без покращень", c4_rem7:"Порушення правил платформи, політики агентства або місцевих законів",
+    c5_num:"", c5_title:"Правила виведення коштів",
+    c5_rule1:"Запити на виведення можуть подаватися один раз на день",
+    c5_rule2:"Мінімальна сума виведення: $10 USD",
+    bank_label:"🏦 Банківський переказ", bank_sub:"Структура комісій",
+    fee_bank_1_range:"Виведення менше <strong>$100</strong>", fee_bank_1_val:"Фіксована комісія $2",
+    fee_bank_2_range:"Виведення <strong>$100 і вище</strong>", fee_bank_2_val:"2% від суми",
+    cwallet_label:"💳 C-Wallet", cwallet_sub:"Структура комісій",
+    fee_cw_1_range:"Виведення менше <strong>$100</strong>", fee_cw_1_val:"Фіксована комісія $3",
+    fee_cw_2_range:"Виведення <strong>$100 і вище</strong>", fee_cw_2_val:"3% від суми",
     footer_note:"📋 Примітка:", footer_text:"Rizz Live залишає за собою право змінювати або оновлювати цю політику будь-коли для підтримання справедливої та стійкої платформи для всіх хостів та глядачів."
   }
 };
